@@ -1,0 +1,10 @@
+webserver:
+  host: 127.0.0.1
+  port: 4321
+
+database:
+ host: 127.0.0.1
+ name: sample_api
+ user: dbuser
+ password: dbpass
+ port: 5432
