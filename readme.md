@@ -1,3 +1,3 @@
-# gms_api
+# GMS API
 
 API for GMS
