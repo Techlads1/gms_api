@@ -1,6 +1,9 @@
 package entity
 
-import "time"
+import (
+	"errors"
+	"time"
+)
 
 type GrievanceState struct {
 	Id                    int       `json:"id,omitempty" form:"id" validate:"omitempty,numeric"`
@@ -10,4 +13,40 @@ type GrievanceState struct {
 	Days                  int       `json:"days,omitempty" form:"days" validate:"omitempty,numeric"`
 	UpdatedAt             time.Time `json:"updated_at,omitempty"`
 	CreatedAt             time.Time `json:"created_at,omitempty"`
+}
+
+func NewGrievanceState(Name , Description, CodeName string, UpdateAt time.Time, CreatedAt time.Time) (*GrievanceState, error) {
+
+	grievance_state := &GrievanceState{
+		Name:       					 Name,
+		Description: 					 Description,
+		CodeName:							 CodeName,
+		UpdatedAt:             UpdateAt,
+		CreatedAt:             CreatedAt,
+	}
+	err := grievance_state.ValidateNewGrievanceState()
+	if err != nil {
+		return nil, err
+	}
+	return grievance_state, nil
+}
+
+
+func (dep *GrievanceState) ValidateUpdateGrievanceState() error {
+	if dep.Id < 1 {
+		return errors.New("invalid grievance State id, field is required")
+	}
+	return nil
+}
+
+
+func (dep *GrievanceState) ValidateNewGrievanceState() error {
+	if dep.Name == "" {
+		return errors.New("invalid grievance State name, field is required")
+	}
+
+	if dep.CodeName == "" {
+		return errors.New("invalid grievance State code name, field is required")
+	}
+	return nil
 }

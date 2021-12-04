@@ -14,7 +14,7 @@ type GrievantCategory struct {
 }
 
 
-//NewDepartment for validating if department entity is ready for insertion
+
 func NewGrievantCategory(Name , Description string, UpdateAt time.Time, CreatedAt time.Time) (*GrievantCategory, error) {
 
 	grievant_category := &GrievantCategory{
@@ -30,7 +30,7 @@ func NewGrievantCategory(Name , Description string, UpdateAt time.Time, CreatedA
 	return grievant_category, nil
 }
 
-//ValidateNewGrievantCategory validates on updating grievant_category
+
 func (dep *GrievantCategory) ValidateUpdateGrievantCategory() error {
 	if dep.Id < 1 {
 		return errors.New("invalid grievant category id, field is required")
@@ -38,7 +38,7 @@ func (dep *GrievantCategory) ValidateUpdateGrievantCategory() error {
 	return nil
 }
 
-//ValidateNewDepartment validates on inserting new department
+
 func (dep *GrievantCategory) ValidateNewGrievantCategory() error {
 	if dep.Name == "" {
 		return errors.New("invalid grievant category name, field is required")

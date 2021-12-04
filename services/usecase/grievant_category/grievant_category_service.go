@@ -1,4 +1,4 @@
-package grievant
+package grievant_category
 
 import (
 	"errors"

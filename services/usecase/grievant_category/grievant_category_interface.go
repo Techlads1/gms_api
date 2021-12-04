@@ -1,4 +1,4 @@
-package grievant
+package grievant_category
 
 import (
 	"github.com/tzdit/sample_api/services/entity"

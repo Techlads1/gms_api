@@ -16,12 +16,12 @@ import (
 
 
 
-type GrievanceCategoryRepository struct {
+type GrievanceSubCategoryRepository struct {
 	db *pgxpool.Pool
 }
 
 
-func NewGrievanceCategoryRepository() *GrievanceCategoryRepository {
+func NewGrievanceSubCategoryRepository() *GrievanceSubCategoryRepository {
 
 	db, err := database.Connect()
 
@@ -29,18 +29,18 @@ func NewGrievanceCategoryRepository() *GrievanceCategoryRepository {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 	}
 
-	return &GrievanceCategoryRepository{
+	return &GrievanceSubCategoryRepository{
 		db: db,
 	}
 
 }
 
 
-func (connect *GrievanceCategoryRepository) Create(arg *entity.GrievanceCategory) (int, error) {
+func (connect *GrievanceSubCategoryRepository) Create(arg *entity.GrievanceSubCategory) (int, error) {
 
 	var Id int
 
-	query := "INSERT INTO grievance_categories " +
+	query := "INSERT INTO grievance_sub_categories " +
 		"(name, description, code_name, update_at, created_at) " +
 		"VALUES($1,$2,$3,$4,$5) " +
 		"RETURNING id"
@@ -54,11 +54,11 @@ func (connect *GrievanceCategoryRepository) Create(arg *entity.GrievanceCategory
 }
 
 //Get gets single Department
-func (connect *GrievanceCategoryRepository) Get(id int) (*entity.GrievanceCategory, error) {
+func (connect *GrievanceSubCategoryRepository) Get(id int) (*entity.GrievanceSubCategory, error) {
 
-	var query = "SELECT name, description, code_name, updated_at, created_at FROM grievance_categories WHERE id = $1"
+	var query = "SELECT name, description, code_name, updated_at, created_at FROM grievance_sub_categories WHERE id = $1"
 
-	var data entity.GrievanceCategory
+	var data entity.GrievanceSubCategory
 
 	data.Id = id
 
@@ -74,9 +74,9 @@ func (connect *GrievanceCategoryRepository) Get(id int) (*entity.GrievanceCatego
 }
 
 //Update for updating Department
-func (connect *GrievanceCategoryRepository) Update(arg *entity.GrievanceCategory) (int, error) {
+func (connect *GrievanceSubCategoryRepository) Update(arg *entity.GrievanceSubCategory) (int, error) {
 
-	query := "UPDATE grievance_categories SET name = $1, description = $2, code_name = $3, updated_at = $4" +
+	query := "UPDATE grievance_sub_categories SET name = $1, description = $2, code_name = $3, updated_at = $4" +
 		" WHERE id = $5"
 
 	_, err := connect.db.Exec(context.Background(), query, arg.Name,
@@ -87,22 +87,22 @@ func (connect *GrievanceCategoryRepository) Update(arg *entity.GrievanceCategory
 }
 
 //List for listing Departments
-func (connect *GrievanceCategoryRepository) List() ([]*entity.GrievanceCategory, error) {
+func (connect *GrievanceSubCategoryRepository) List() ([]*entity.GrievanceSubCategory, error) {
 
-	var entities []*entity.GrievanceCategory
+	var entities []*entity.GrievanceSubCategory
 
 	var query = "SELECT id, name, description, code_name, updated_at, created_at " +
-		"FROM grievance_categories"
+		"FROM grievance_sub_categories"
 
 	rows, err := connect.db.Query(context.Background(), query)
 
 	if err != nil {
-		return nil, errors.New("error listing grievance categories")
+		return nil, errors.New("error listing grievance sub categories")
 	}
 
 	for rows.Next() {
 
-		var data entity.GrievanceCategory
+		var data entity.GrievanceSubCategory
 
 		if err := rows.Scan(&data.Id, &data.Name, &data.Description, &data.CodeName, &data.UpdatedAt, &data.CreatedAt); err != nil {
 			log.Errorf("error scanning %v", err)
@@ -116,9 +116,9 @@ func (connect *GrievanceCategoryRepository) List() ([]*entity.GrievanceCategory,
 }
 
 //Delete for deleting Department
-func (connect *GrievanceCategoryRepository) Delete(id int) error {
+func (connect *GrievanceSubCategoryRepository) Delete(id int) error {
 
-	query := "DELETE FROM grievance_categories WHERE id = $1"
+	query := "DELETE FROM grievance_sub_categories WHERE id = $1"
 
 	_, err := connect.db.Exec(context.Background(), query, id)
 

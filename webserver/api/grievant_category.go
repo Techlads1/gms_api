@@ -10,11 +10,11 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/tzdit/sample_api/package/log"
 	"github.com/tzdit/sample_api/package/util"
-	"github.com/tzdit/sample_api/services/usecase/grievant"
+	"github.com/tzdit/sample_api/services/usecase/grievant_category"
 	"github.com/tzdit/sample_api/webserver/models"
 )
 
-//StoreGrievantCategory create a new GrievantCategory
+
 func StoreGrievantCategory(c echo.Context) error {
 
 	d := models.GrievantCategory{}
@@ -29,7 +29,7 @@ func StoreGrievantCategory(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, "could not validate GrievantCategory")
 	}
 
-	service := grievant.NewService()
+	service := grievant_category.NewService()
 
 	_, err := service.StoreGrievantCategory(d.Name, d.Description)
 
@@ -43,9 +43,9 @@ func StoreGrievantCategory(c echo.Context) error {
 
 }
 
-//ListGrievantCategories list all GrievantCategories
+
 func ListGrievantCategories(c echo.Context) error {
-	service := grievant.NewService()
+	service := grievant_category.NewService()
 	grievant_categories, err := service.ListGrievantCategory()
 	if util.CheckError(err) {
 		log.Errorf("error listing create GrievantCategory %v", err)
@@ -67,15 +67,15 @@ func ListGrievantCategories(c echo.Context) error {
 	return c.JSON(http.StatusOK, json_grievant_categories)
 }
 
-//ShowGrievantCategory get a single GrievantCategory
+
 func ShowGrievantCategory(c echo.Context) error {
-	cID, errParseInt := strconv.ParseInt(c.Param("id"), 10, 64) //Converting String to unint64
+	cID, errParseInt := strconv.ParseInt(c.Param("id"), 10, 64) 
 	if util.CheckError(errParseInt) {
 
 		return c.JSON(http.StatusInternalServerError, "invalid GrievantCategory id")
 	}
 
-	service := grievant.NewService()
+	service := grievant_category.NewService()
 	GrievantCategory, err := service.ShowGrievantCategory(int(cID))
 	if util.CheckError(err) {
 		errMsg := fmt.Sprintf("could not get GrievantCategory with id %v", cID)
@@ -92,7 +92,7 @@ func ShowGrievantCategory(c echo.Context) error {
 	return c.JSON(http.StatusOK, u)
 }
 
-//UpdateGrievantCategory update a GrievantCategory
+
 func UpdateGrievantCategory(c echo.Context) error {
 	d := models.GrievantCategory{}
 
@@ -106,10 +106,8 @@ func UpdateGrievantCategory(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, "could not validate GrievantCategory")
 	}
 
-	service := grievant.NewService()
+	service := grievant_category.NewService()
 
-	//TODO make sure you capture these before saving procedure
-	//ac.updateBy=logged user
 
 	ent, err := service.ShowGrievantCategory(d.Id)
 
@@ -132,7 +130,7 @@ func UpdateGrievantCategory(c echo.Context) error {
 	}
 }
 
-//DeleteGrievantCategory delete a GrievantCategory
+
 func DeleteGrievantCategory(c echo.Context) error {
 	d := models.GrievantCategory{}
 
@@ -140,7 +138,7 @@ func DeleteGrievantCategory(c echo.Context) error {
 		log.Errorf("%s\n", err)
 	}
 
-	service := grievant.NewService()
+	service := grievant_category.NewService()
 
 	err := service.DeleteGrievantCategory(d.Id)
 
