@@ -31,7 +31,7 @@ func StoreGrievanceStateTransition(c echo.Context) error {
 
 	service := grievance_state_transition.NewService()
 
-	_, err := service.StoreGrievanceStateTransition(d.Description, d.FromStateId, d.ToStateId, d.Days)
+	_, err := service.StoreGrievanceStateTransition(d.Description, d.FromStateId, d.ToStateId)
 
 	if util.CheckError(err) {
 		return c.JSON(http.StatusInternalServerError, "error creating create GrievanceStateTransition")
@@ -59,7 +59,6 @@ func ListGrievanceStateTransitions(c echo.Context) error {
 			Description:       			GrievanceStateTransition.Description,
 			FromStateId: 						GrievanceStateTransition.FromStateId,
 			ToStateId: 							GrievanceStateTransition.ToStateId,
-			Days: 							    GrievanceStateTransition.Days,
 			UpdatedAt:        			GrievanceStateTransition.UpdatedAt,
 			CreatedAt:             	GrievanceStateTransition.CreatedAt,
 		}
@@ -88,7 +87,6 @@ func ShowGrievanceStateTransition(c echo.Context) error {
 			Description:       			GrievanceStateTransition.Description,
 			FromStateId: 						GrievanceStateTransition.FromStateId,
 			ToStateId: 							GrievanceStateTransition.ToStateId,
-			Days: 							    GrievanceStateTransition.Days,
 			UpdatedAt:        			GrievanceStateTransition.UpdatedAt,
 			CreatedAt:             	GrievanceStateTransition.CreatedAt,
 		}
@@ -122,7 +120,6 @@ func UpdateGrievanceStateTransition(c echo.Context) error {
 	ent.Description = d.Description
 	ent.FromStateId = d.FromStateId
 	ent.ToStateId = d.ToStateId
-	ent.Days = d.Days
 	ent.UpdatedAt = time.Now()
 
 	_, err = service.UpdateGrievanceStateTransition(ent)

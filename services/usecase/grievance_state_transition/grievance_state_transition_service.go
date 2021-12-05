@@ -25,8 +25,8 @@ func NewService() *Service {
 }
 
 
-func (s *Service) StoreGrievanceStateTransition(Name string, FromStateId int, ToStateId int, Days int) (int, error) {
-	grievance_StateTransition, err := entity.NewGrievanceStateTransition(Name, FromStateId, ToStateId, Days, time.Now(), time.Now())
+func (s *Service) StoreGrievanceStateTransition(Name string, FromStateId int, ToStateId int) (int, error) {
+	grievance_StateTransition, err := entity.NewGrievanceStateTransition(Name, FromStateId, ToStateId, time.Now(), time.Now())
 
 	if err != nil {
 		log.Error(err)

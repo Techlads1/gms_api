@@ -41,7 +41,7 @@ func (connect *GrievanceFillingModeRepository) Store(arg *entity.GrievanceFillin
 	var Id int
 
 	query := "INSERT INTO grievance_filling_modes " +
-		"(name, description, code_name, update_at, created_at) " +
+		"(name, description, code_name, updated_at, created_at) " +
 		"VALUES($1,$2,$3,$4,$5) " +
 		"RETURNING id"
 

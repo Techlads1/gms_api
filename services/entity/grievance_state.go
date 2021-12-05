@@ -6,7 +6,7 @@ import (
 )
 
 type GrievanceState struct {
-	Id                    int       `json:"id,omitempty" form:"id" validate:"omitempty,numeric"`
+	Id                    int       `json:"id,omitempty" params:"id" form:"id" validate:"omitempty,numeric"`
 	Name       						string    `json:"name" form:"name" validate:"required"`
 	CodeName       				string    `json:"code_name" form:"code_name" validate:"required"`
 	Description 					string    `json:"description" form:"description" validate:"required"`
@@ -15,12 +15,13 @@ type GrievanceState struct {
 	CreatedAt             time.Time `json:"created_at,omitempty"`
 }
 
-func NewGrievanceState(Name , Description, CodeName string, UpdateAt time.Time, CreatedAt time.Time) (*GrievanceState, error) {
+func NewGrievanceState(Name , Description, CodeName string, Days int, UpdateAt time.Time, CreatedAt time.Time) (*GrievanceState, error) {
 
 	grievance_state := &GrievanceState{
 		Name:       					 Name,
 		Description: 					 Description,
 		CodeName:							 CodeName,
+		Days:							 		 Days,
 		UpdatedAt:             UpdateAt,
 		CreatedAt:             CreatedAt,
 	}

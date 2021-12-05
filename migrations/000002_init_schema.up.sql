@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS grievants
                           updated_at timestamp (0) NULL,
                           PRIMARY KEY (id)
              );
-CREATE TABLE IF NOT EXISTS grievants_groups
+CREATE TABLE IF NOT EXISTS grievant_groups
              (
                           id   SERIAL,
                           name VARCHAR (200) NULL,
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS grievants_groups_has_grievants
                           role              VARCHAR (45) NULL,
                           PRIMARY KEY (grievant_group_id, grievant_id)
              );
-CREATE TABLE IF NOT EXISTS grievance_filing_modes
+CREATE TABLE IF NOT EXISTS grievance_filling_modes
              (
                           id        SERIAL,
                           name      VARCHAR (200) NULL,
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS grievance_appeals
                           updated_at timestamp (0) NULL,
                           PRIMARY KEY (id)
              );
-CREATE TABLE IF NOT EXISTS appeal_reasons
+CREATE TABLE IF NOT EXISTS grievance_appeal_reasons
              (
                           id   SERIAL,
                           name VARCHAR (200) NULL,
@@ -151,6 +151,7 @@ CREATE TABLE IF NOT EXISTS grievance_state_actions
 CREATE TABLE IF NOT EXISTS state_transitions
              (
                           id            SERIAL,
+                          description TEXT NULL,
                           from_state_id INT NULL,
                           to_state_id   INT NULL,
                           created_at timestamp (0) NULL,

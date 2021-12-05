@@ -30,7 +30,7 @@ type Repository interface {
 type UseCase interface {
 	ShowGrievanceState(id int) (*entity.GrievanceState, error)
 	ListGrievanceState() ([]*entity.GrievanceState, error)
-	StoreGrievanceState(name string, description string, CodeName string) (int, error)
+	StoreGrievanceState(name string, description string, CodeName string, Days int) (int, error)
 	UpdateGrievanceState(emp *entity.GrievanceState) (int, error)
 	DeleteGrievanceState(id int) error
 }

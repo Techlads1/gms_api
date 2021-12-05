@@ -19,6 +19,7 @@ func NewGrievantGroup(Name , Description string, GrievantCategoryId int, UpdateA
 	grievant_Group := &GrievantGroup{
 		Name:       					 Name,
 		Description: 					 Description,
+		GrievantCategoryId:    GrievantCategoryId,
 		UpdatedAt:             UpdateAt,
 		CreatedAt:             CreatedAt,
 	}
@@ -43,7 +44,7 @@ func (dep *GrievantGroup) ValidateNewGrievantGroup() error {
 		return errors.New("invalid grievant Group name, field is required")
 	}
 
-	if dep.GrievantCategoryId <= 0  {
+	if dep.GrievantCategoryId < 1  {
 		return errors.New("invalid grievant category id, field is required")
 	}
 

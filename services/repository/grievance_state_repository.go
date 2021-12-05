@@ -41,14 +41,14 @@ func (connect *GrievanceStateRepository) Store(arg *entity.GrievanceState) (int,
 	var Id int
 
 	query := "INSERT INTO grievance_states " +
-		"(name, description, code_name, update_at, created_at) " +
-		"VALUES($1,$2,$3,$4,$5) " +
+		"(name, description, code_name, days, updated_at, created_at) " +
+		"VALUES($1,$2,$3,$4,$5,$6) " +
 		"RETURNING id"
 
 	err := connect.db.QueryRow(context.Background(), query,
-		arg.Name, arg.Description, arg.CodeName,
+		arg.Name, arg.Description, arg.CodeName, arg.Days,
 		arg.UpdatedAt, arg.CreatedAt).Scan(&Id)
-
+	
 	return Id, err
 
 }
@@ -56,14 +56,14 @@ func (connect *GrievanceStateRepository) Store(arg *entity.GrievanceState) (int,
 //Get gets single Department
 func (connect *GrievanceStateRepository) Show(id int) (*entity.GrievanceState, error) {
 
-	var query = "SELECT name, description, code_name, updated_at, created_at FROM grievance_states WHERE id = $1"
+	var query = "SELECT name, description, code_name, days, updated_at, created_at FROM grievance_states WHERE id = $1"
 
 	var data entity.GrievanceState
 
 	data.Id = id
 
 	err := connect.db.QueryRow(context.Background(), query, id).
-		Scan(&data.Name, &data.Description, &data.CodeName, &data.UpdatedAt, &data.CreatedAt)
+		Scan(&data.Name, &data.Description, &data.CodeName, &data.Days, &data.UpdatedAt, &data.CreatedAt)
 
 	if err != nil {
 		return nil, err
@@ -76,11 +76,11 @@ func (connect *GrievanceStateRepository) Show(id int) (*entity.GrievanceState, e
 //Update for updating Department
 func (connect *GrievanceStateRepository) Update(arg *entity.GrievanceState) (int, error) {
 
-	query := "UPDATE grievance_states SET name = $1, description = $2, code_name = $3, updated_at = $4" +
-		" WHERE id = $5"
+	query := "UPDATE grievance_states SET name = $1, description = $2, code_name = $3, days = $4, updated_at = $5" +
+		" WHERE id = $6"
 
 	_, err := connect.db.Exec(context.Background(), query, arg.Name,
-		arg.Description, arg.CodeName, time.Now(), arg.Id)
+		arg.Description, arg.CodeName, arg.Days, time.Now(), arg.Id)
 
 	return arg.Id, err
 
@@ -91,7 +91,7 @@ func (connect *GrievanceStateRepository) List() ([]*entity.GrievanceState, error
 
 	var entities []*entity.GrievanceState
 
-	var query = "SELECT id, name, description, code_name, updated_at, created_at " +
+	var query = "SELECT id, name, description, code_name, days, updated_at, created_at " +
 		"FROM grievance_states"
 
 	rows, err := connect.db.Query(context.Background(), query)
@@ -104,7 +104,7 @@ func (connect *GrievanceStateRepository) List() ([]*entity.GrievanceState, error
 
 		var data entity.GrievanceState
 
-		if err := rows.Scan(&data.Id, &data.Name, &data.Description, &data.CodeName, &data.UpdatedAt, &data.CreatedAt); err != nil {
+		if err := rows.Scan(&data.Id, &data.Name, &data.Description, &data.CodeName, &data.Days, &data.UpdatedAt, &data.CreatedAt); err != nil {
 			log.Errorf("error scanning %v", err)
 		}
 

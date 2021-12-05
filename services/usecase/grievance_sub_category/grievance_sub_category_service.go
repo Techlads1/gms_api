@@ -25,8 +25,8 @@ func NewService() *Service {
 }
 
 
-func (s *Service) StoreGrievanceSubCategory(Name, Description, CodeName string) (int, error) {
-	grievanceSub_category, err := entity.NewGrievanceSubCategory(Name, Description, CodeName, time.Now(), time.Now())
+func (s *Service) StoreGrievanceSubCategory(Name, Description, CodeName string, GrievanceCategoryId int) (int, error) {
+	grievanceSub_category, err := entity.NewGrievanceSubCategory(Name, Description, CodeName, GrievanceCategoryId, time.Now(), time.Now())
 
 	if err != nil {
 		log.Error(err)

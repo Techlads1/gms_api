@@ -41,7 +41,7 @@ func (connect *GrievanceStateActionRepository) Store(arg *entity.GrievanceStateA
 	var Id int
 
 	query := "INSERT INTO grievance_state_actions " +
-		"(name, role_perform_action, state_id, update_at, created_at) " +
+		"(name, role_perform_action, grievance_state_id, updated_at, created_at) " +
 		"VALUES($1,$2,$3,$4,$5) " +
 		"RETURNING id"
 
@@ -56,7 +56,7 @@ func (connect *GrievanceStateActionRepository) Store(arg *entity.GrievanceStateA
 //Get gets single Department
 func (connect *GrievanceStateActionRepository) Show(id int) (*entity.GrievanceStateAction, error) {
 
-	var query = "SELECT name, role_perform_action, state_id, updated_at, created_at FROM grievance_state_actions WHERE id = $1"
+	var query = "SELECT name, role_perform_action, grievance_state_id, updated_at, created_at FROM grievance_state_actions WHERE id = $1"
 
 	var data entity.GrievanceStateAction
 
@@ -76,7 +76,7 @@ func (connect *GrievanceStateActionRepository) Show(id int) (*entity.GrievanceSt
 //Update for updating Department
 func (connect *GrievanceStateActionRepository) Update(arg *entity.GrievanceStateAction) (int, error) {
 
-	query := "UPDATE grievance_state_actions SET name = $1, role_perform_action = $2, state_id = $3, updated_at = $4" +
+	query := "UPDATE grievance_state_actions SET name = $1, role_perform_action = $2, grievance_state_id = $3, updated_at = $4" +
 		" WHERE id = $5"
 
 	_, err := connect.db.Exec(context.Background(), query, arg.Name,
@@ -91,7 +91,7 @@ func (connect *GrievanceStateActionRepository) List() ([]*entity.GrievanceStateA
 
 	var entities []*entity.GrievanceStateAction
 
-	var query = "SELECT id, name, role_perform_action, state_id, updated_at, created_at " +
+	var query = "SELECT id, name, role_perform_action, grievance_state_id, updated_at, created_at " +
 		"FROM grievance_state_actions"
 
 	rows, err := connect.db.Query(context.Background(), query)

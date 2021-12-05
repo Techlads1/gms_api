@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/k0kubun/pp"
 	"github.com/tzdit/sample_api/package/log"
 	"github.com/tzdit/sample_api/services/database"
 	"github.com/tzdit/sample_api/services/entity"
@@ -47,6 +48,7 @@ func (connect *GrievantGroupRepository) Store(arg *entity.GrievantGroup) (int, e
 	err := connect.db.QueryRow(context.Background(), query,
 		&arg.Name, &arg.Description,&arg.GrievantCategoryId,
 		&arg.UpdatedAt, &arg.CreatedAt).Scan(&Id)
+		pp.Printf(err.Error())
 
 	return Id, err
 
@@ -79,7 +81,7 @@ func (connect *GrievantGroupRepository) Update(arg *entity.GrievantGroup) (int, 
 		" WHERE id = $5"
 
 	_, err := connect.db.Exec(context.Background(), query, arg.Name,
-		arg.Description, time.Now(), arg.Id)
+		arg.Description, arg.GrievantCategoryId, time.Now(), arg.Id)
 
 	return arg.Id, err
 

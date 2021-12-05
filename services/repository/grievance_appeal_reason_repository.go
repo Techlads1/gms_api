@@ -41,7 +41,7 @@ func (connect *GrievanceAppealReasonRepository) Store(arg *entity.GrievanceAppea
 	var Id int
 
 	query := "INSERT INTO grievance_appeal_reasons " +
-		"(name, description, update_at, created_at) " +
+		"(name, description, updated_at, created_at) " +
 		"VALUES($1,$2,$3,$4) " +
 		"RETURNING id"
 
@@ -77,7 +77,7 @@ func (connect *GrievanceAppealReasonRepository) Show(id int) (*entity.GrievanceA
 func (connect *GrievanceAppealReasonRepository) Update(arg *entity.GrievanceAppealReason) (int, error) {
 
 	query := "UPDATE grievance_appeal_reasons SET name = $1, description = $2, updated_at = $3" +
-		" WHERE id = $5"
+		" WHERE id = $4"
 
 	_, err := connect.db.Exec(context.Background(), query, arg.Name,
 		arg.Description, time.Now(), arg.Id)

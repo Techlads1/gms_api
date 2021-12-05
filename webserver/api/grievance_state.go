@@ -31,7 +31,7 @@ func StoreGrievanceState(c echo.Context) error {
 
 	service := grievance_state.NewService()
 
-	_, err := service.StoreGrievanceState(d.Name, d.Description, d.CodeName)
+	_, err := service.StoreGrievanceState(d.Name, d.Description, d.CodeName ,d.Days)
 
 	if util.CheckError(err) {
 		return c.JSON(http.StatusInternalServerError, "error creating create GrievanceState")
@@ -59,6 +59,7 @@ func ListGrievanceStates(c echo.Context) error {
 			Name:       						GrievanceState.Name,
 			Description: 						GrievanceState.Description,
 			CodeName: 							GrievanceState.CodeName,
+			Days: 							    GrievanceState.Days,
 			UpdatedAt:        			GrievanceState.UpdatedAt,
 			CreatedAt:             	GrievanceState.CreatedAt,
 		}
@@ -87,6 +88,7 @@ func ShowGrievanceState(c echo.Context) error {
 			Name:       						GrievanceState.Name,
 			Description: 						GrievanceState.Description,
 			CodeName: 							GrievanceState.CodeName,
+			Days: 							    GrievanceState.Days,
 			UpdatedAt:        			GrievanceState.UpdatedAt,
 			CreatedAt:             	GrievanceState.CreatedAt,
 		}
@@ -120,6 +122,7 @@ func UpdateGrievanceState(c echo.Context) error {
 	ent.Name = d.Name
 	ent.Description = d.Description
 	ent.CodeName = d.CodeName
+	ent.Days = d.Days
 	ent.UpdatedAt = time.Now()
 
 	_, err = service.UpdateGrievanceState(ent)

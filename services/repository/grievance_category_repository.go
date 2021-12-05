@@ -41,7 +41,7 @@ func (connect *GrievanceCategoryRepository) Store(arg *entity.GrievanceCategory)
 	var Id int
 
 	query := "INSERT INTO grievance_categories " +
-		"(name, description, code_name, update_at, created_at) " +
+		"(name, description, code_name, updated_at, created_at) " +
 		"VALUES($1,$2,$3,$4,$5) " +
 		"RETURNING id"
 

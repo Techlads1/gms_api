@@ -40,13 +40,13 @@ func (connect *GrievanceStateTransitionRepository) Store(arg *entity.GrievanceSt
 
 	var Id int
 
-	query := "INSERT INTO grievance_state_transitions " +
-		"(description, from_state_id, to_state_id, days, update_at, created_at) " +
-		"VALUES($1,$2,$3,$4,$5,$6) " +
+	query := "INSERT INTO state_transitions " +
+		"(description, from_state_id, to_state_id, updated_at, created_at) " +
+		"VALUES($1,$2,$3,$4,$5) " +
 		"RETURNING id"
 
 	err := connect.db.QueryRow(context.Background(), query,
-		arg.Description, arg.FromStateId, arg.ToStateId, arg.Days,
+		arg.Description, arg.FromStateId, arg.ToStateId,
 		arg.UpdatedAt, arg.CreatedAt).Scan(&Id)
 
 	return Id, err
@@ -56,7 +56,7 @@ func (connect *GrievanceStateTransitionRepository) Store(arg *entity.GrievanceSt
 //Get gets single Department
 func (connect *GrievanceStateTransitionRepository) Show(id int) (*entity.GrievanceStateTransition, error) {
 
-	var query = "SELECT description, from_state_id, to_state_id, days, updated_at, created_at FROM grievance_state_transitions WHERE id = $1"
+	var query = "SELECT description, from_state_id, to_state_id, updated_at, created_at FROM state_transitions WHERE id = $1"
 
 	var data entity.GrievanceStateTransition
 
@@ -76,7 +76,7 @@ func (connect *GrievanceStateTransitionRepository) Show(id int) (*entity.Grievan
 //Update for updating Department
 func (connect *GrievanceStateTransitionRepository) Update(arg *entity.GrievanceStateTransition) (int, error) {
 
-	query := "UPDATE grievance_state_transitions SET description = $1, from_state_id = $2, to_state_id = $3, updated_at = $4" +
+	query := "UPDATE state_transitions SET description = $1, from_state_id = $2, to_state_id = $3, updated_at = $4" +
 		" WHERE id = $5"
 
 	_, err := connect.db.Exec(context.Background(), query, arg.Description,
@@ -92,7 +92,7 @@ func (connect *GrievanceStateTransitionRepository) List() ([]*entity.GrievanceSt
 	var entities []*entity.GrievanceStateTransition
 
 	var query = "SELECT id, description, from_state_id, to_state_id, updated_at, created_at " +
-		"FROM grievance_state_transitions"
+		"FROM state_transitions"
 
 	rows, err := connect.db.Query(context.Background(), query)
 
@@ -104,7 +104,7 @@ func (connect *GrievanceStateTransitionRepository) List() ([]*entity.GrievanceSt
 
 		var data entity.GrievanceStateTransition
 
-		if err := rows.Scan(&data.Id, &data.Days, &data.FromStateId, &data.ToStateId, &data.Days, &data.UpdatedAt, &data.CreatedAt); err != nil {
+		if err := rows.Scan(&data.Id, &data.Description, &data.FromStateId, &data.ToStateId, &data.UpdatedAt, &data.CreatedAt); err != nil {
 			log.Errorf("error scanning %v", err)
 		}
 
@@ -118,7 +118,7 @@ func (connect *GrievanceStateTransitionRepository) List() ([]*entity.GrievanceSt
 //Delete for deleting Department
 func (connect *GrievanceStateTransitionRepository) Delete(id int) error {
 
-	query := "DELETE FROM grievance_state_actions WHERE id = $1"
+	query := "DELETE FROM state_transitions WHERE id = $1"
 
 	_, err := connect.db.Exec(context.Background(), query, id)
 

@@ -10,20 +10,18 @@ type GrievanceStateTransition struct {
 	FromStateId      			int    		`json:"from_state_id" form:"from_state_id" validate:"required"`
 	ToStateId      				int    		`json:"to_state_id" form:"to_state_id" validate:"required"`
 	Description 					string    `json:"description" form:"description" validate:"required"`
-	Days                  int       `json:"days,omitempty" form:"days" validate:"omitempty,numeric"`
 	UpdatedAt             time.Time `json:"updated_at,omitempty"`
 	CreatedAt             time.Time `json:"created_at,omitempty"`
 }
 
 
-func NewGrievanceStateTransition( Description string, FromStateId int, ToStateId int, Days int, UpdateAt time.Time, CreatedAt time.Time) (*GrievanceStateTransition, error) {
+func NewGrievanceStateTransition( Description string, FromStateId int, ToStateId int,UpdateAt time.Time, CreatedAt time.Time) (*GrievanceStateTransition, error) {
 
 
 	grievance_StateTransition := &GrievanceStateTransition{
 		FromStateId:       		 FromStateId,
 		Description: 					 Description,
 		ToStateId:						 ToStateId,
-		Days:                  Days,
 		UpdatedAt:             UpdateAt,
 		CreatedAt:             CreatedAt,
 	}

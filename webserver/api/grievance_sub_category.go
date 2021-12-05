@@ -31,7 +31,7 @@ func StoreGrievanceSubCategory(c echo.Context) error {
 
 	service := grievance_sub_category.NewService()
 
-	_, err := service.StoreGrievanceSubCategory(d.Name, d.Description, d.CodeName)
+	_, err := service.StoreGrievanceSubCategory(d.Name, d.Description, d.CodeName, d.GrievanceCategoryId)
 
 	if util.CheckError(err) {
 		return c.JSON(http.StatusInternalServerError, "error creating create GrievanceSubCategory")
@@ -59,6 +59,7 @@ func ListGrievanceSubCategories(c echo.Context) error {
 			Name:       						GrievanceSubCategory.Name,
 			Description: 						GrievanceSubCategory.Description,
 			CodeName: 							GrievanceSubCategory.CodeName,
+			GrievanceCategoryId: 		GrievanceSubCategory.GrievanceCategoryId,
 			UpdatedAt:        			GrievanceSubCategory.UpdatedAt,
 			CreatedAt:             	GrievanceSubCategory.CreatedAt,
 		}
@@ -87,6 +88,7 @@ func ShowGrievanceSubCategory(c echo.Context) error {
 			Name:       						GrievanceSubCategory.Name,
 			Description: 						GrievanceSubCategory.Description,
 			CodeName: 							GrievanceSubCategory.CodeName,
+			GrievanceCategoryId: 		GrievanceSubCategory.GrievanceCategoryId,
 			UpdatedAt:        			GrievanceSubCategory.UpdatedAt,
 			CreatedAt:             	GrievanceSubCategory.CreatedAt,
 		}
@@ -120,6 +122,7 @@ func UpdateGrievanceSubCategory(c echo.Context) error {
 	ent.Name = d.Name
 	ent.Description = d.Description
 	ent.CodeName = d.CodeName
+	ent.GrievanceCategoryId = d.GrievanceCategoryId
 	ent.UpdatedAt = time.Now()
 
 	_, err = service.UpdateGrievanceSubCategory(ent)
