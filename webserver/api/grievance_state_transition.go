@@ -10,7 +10,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/tzdit/sample_api/package/log"
 	"github.com/tzdit/sample_api/package/util"
-	"github.com/tzdit/sample_api/services/usecase/grievance_state_Transition"
+	"github.com/tzdit/sample_api/services/usecase/grievance_state_transition"
 	"github.com/tzdit/sample_api/webserver/models"
 )
 
@@ -29,7 +29,7 @@ func StoreGrievanceStateTransition(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, "could not validate GrievanceStateTransition")
 	}
 
-	service := grievance_state_Transition.NewService()
+	service := grievance_state_transition.NewService()
 
 	_, err := service.StoreGrievanceStateTransition(d.Description, d.FromStateId, d.ToStateId, d.Days)
 
@@ -45,7 +45,7 @@ func StoreGrievanceStateTransition(c echo.Context) error {
 
 
 func ListGrievanceStateTransitions(c echo.Context) error {
-	service := grievance_state_Transition.NewService()
+	service := grievance_state_transition.NewService()
 	grievance_state_Transitions, err := service.ListGrievanceStateTransition()
 	if util.CheckError(err) {
 		log.Errorf("error listing create GrievanceStateTransition %v", err)
@@ -77,7 +77,7 @@ func ShowGrievanceStateTransition(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, "invalid GrievanceStateTransition id")
 	}
 
-	service := grievance_state_Transition.NewService()
+	service := grievance_state_transition.NewService()
 	GrievanceStateTransition, err := service.ShowGrievanceStateTransition(int(cID))
 	if util.CheckError(err) {
 		errMsg := fmt.Sprintf("could not get GrievanceStateTransition with id %v", cID)
@@ -110,7 +110,7 @@ func UpdateGrievanceStateTransition(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, "could not validate GrievanceStateTransition")
 	}
 
-	service := grievance_state_Transition.NewService()
+	service := grievance_state_transition.NewService()
 
 
 	ent, err := service.ShowGrievanceStateTransition(d.Id)
@@ -144,7 +144,7 @@ func DeleteGrievanceStateTransition(c echo.Context) error {
 		log.Errorf("%s\n", err)
 	}
 
-	service := grievance_state_Transition.NewService()
+	service := grievance_state_transition.NewService()
 
 	err := service.DeleteGrievanceStateTransition(d.Id)
 

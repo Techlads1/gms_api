@@ -14,11 +14,12 @@ type GrievanceSubCategory struct {
 	CreatedAt             time.Time `json:"created_at,omitempty"`
 }
 
-func NewGrievanceSubCategory(Name , Description string, UpdateAt time.Time, CreatedAt time.Time) (*GrievanceSubCategory, error) {
+func NewGrievanceSubCategory(Name , Description, CodeName string, UpdateAt time.Time, CreatedAt time.Time) (*GrievanceSubCategory, error) {
 
 	grievance_sub_category := &GrievanceSubCategory{
 		Name:       					 Name,
 		Description: 					 Description,
+		CodeName:  						 CodeName,
 		UpdatedAt:             UpdateAt,
 		CreatedAt:             CreatedAt,
 	}
@@ -41,6 +42,10 @@ func (dep *GrievanceSubCategory) ValidateUpdateGrievanceSubCategory() error {
 func (dep *GrievanceSubCategory) ValidateNewGrievanceSubCategory() error {
 	if dep.Name == "" {
 		return errors.New("invalid grievance sub category name, field is required")
+	}
+
+	if dep.CodeName == "" {
+		return errors.New("invalid grievance sub category code name, field is required")
 	}
 	return nil
 }

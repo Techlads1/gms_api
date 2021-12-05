@@ -36,7 +36,7 @@ func NewGrievanceAppealReasonRepository() *GrievanceAppealReasonRepository {
 }
 
 
-func (connect *GrievanceAppealReasonRepository) Create(arg *entity.GrievanceAppealReason) (int, error) {
+func (connect *GrievanceAppealReasonRepository) Store(arg *entity.GrievanceAppealReason) (int, error) {
 
 	var Id int
 
@@ -54,7 +54,7 @@ func (connect *GrievanceAppealReasonRepository) Create(arg *entity.GrievanceAppe
 }
 
 //Get gets single Department
-func (connect *GrievanceAppealReasonRepository) Get(id int) (*entity.GrievanceAppealReason, error) {
+func (connect *GrievanceAppealReasonRepository) Show(id int) (*entity.GrievanceAppealReason, error) {
 
 	var query = "SELECT name, description, updated_at, created_at FROM grievance_appeal_reasons WHERE id = $1"
 

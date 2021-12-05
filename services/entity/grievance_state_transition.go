@@ -16,13 +16,14 @@ type GrievanceStateTransition struct {
 }
 
 
-func NewGrievanceStateTransition( Description string, FromStateId int, ToStateId int, UpdateAt time.Time, CreatedAt time.Time) (*GrievanceStateTransition, error) {
+func NewGrievanceStateTransition( Description string, FromStateId int, ToStateId int, Days int, UpdateAt time.Time, CreatedAt time.Time) (*GrievanceStateTransition, error) {
 
 
 	grievance_StateTransition := &GrievanceStateTransition{
 		FromStateId:       		 FromStateId,
 		Description: 					 Description,
 		ToStateId:						 ToStateId,
+		Days:                  Days,
 		UpdatedAt:             UpdateAt,
 		CreatedAt:             CreatedAt,
 	}
@@ -50,3 +51,9 @@ func (dep *GrievanceStateTransition) ValidateNewGrievanceStateTransition() error
 	
 	return nil
 }
+
+
+
+
+
+

@@ -36,7 +36,7 @@ func NewGrievanceStateTransitionRepository() *GrievanceStateTransitionRepository
 }
 
 
-func (connect *GrievanceStateTransitionRepository) Create(arg *entity.GrievanceStateTransition) (int, error) {
+func (connect *GrievanceStateTransitionRepository) Store(arg *entity.GrievanceStateTransition) (int, error) {
 
 	var Id int
 
@@ -54,7 +54,7 @@ func (connect *GrievanceStateTransitionRepository) Create(arg *entity.GrievanceS
 }
 
 //Get gets single Department
-func (connect *GrievanceStateTransitionRepository) Get(id int) (*entity.GrievanceStateTransition, error) {
+func (connect *GrievanceStateTransitionRepository) Show(id int) (*entity.GrievanceStateTransition, error) {
 
 	var query = "SELECT description, from_state_id, to_state_id, days, updated_at, created_at FROM grievance_state_transitions WHERE id = $1"
 

@@ -6,15 +6,15 @@ import (
 
 //Reader interface
 type Reader interface {
-	Show(id int) (*entity.GrievanceCategory, error)
-	List() ([]*entity.GrievanceCategory, error)
+	Show(id int) (*entity.GrievanceFillingMode, error)
+	List() ([]*entity.GrievanceFillingMode, error)
 }
 
 //DONE
 //Writer interface
 type Writer interface {
-	Store(e *entity.GrievanceCategory) (int, error)
-	Update(e *entity.GrievanceCategory) (int, error)
+	Store(e *entity.GrievanceFillingMode) (int, error)
+	Update(e *entity.GrievanceFillingMode) (int, error)
 	Delete(id int) error
 }
 
@@ -28,9 +28,9 @@ type Repository interface {
 //DONE
 //UseCase interface
 type UseCase interface {
-	ShowGrievanceCategory(id int) (*entity.GrievanceCategory, error)
-	ListGrievanceCategory() ([]*entity.GrievanceCategory, error)
-	StoreGrievanceCategory(name string, description string, CodeName string) (int, error)
-	UpdateGrievanceCategory(emp *entity.GrievanceCategory) (int, error)
-	DeleteGrievanceCategory(id int) error
+	ShowGrievanceFillingMode(id int) (*entity.GrievanceFillingMode, error)
+	ListGrievanceFillingMode() ([]*entity.GrievanceFillingMode, error)
+	StoreGrievanceFillingMode(name string, description string, CodeName string) (int, error)
+	UpdateGrievanceFillingMode(emp *entity.GrievanceFillingMode) (int, error)
+	DeleteGrievanceFillingMode(id int) error
 }
