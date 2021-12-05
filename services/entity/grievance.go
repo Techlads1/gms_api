@@ -1,6 +1,9 @@
 package entity
 
-import "time"
+import (
+	"errors"
+	"time"
+)
 
 type Grievance struct {
 	Id                    	int       `json:"id,omitempty" form:"id" validate:"omitempty,numeric"`
@@ -16,4 +19,46 @@ type Grievance struct {
 	GrievantGroupId         int       `json:"grievant_group_id,omitempty" form:"grievant_group_id" validate:"omitempty,numeric"`
 	UpdatedAt            		time.Time `json:"updated_at,omitempty"`
 	CreatedAt             	time.Time `json:"created_at,omitempty"`
+}
+
+func NewGrievance(Name , Description, ReferenceNumber, Comment, State, LocationOccurred string, 
+	FillingModeId, GrievanceSubCategoryId, GrievantId,
+	 GrievantGroupId int,  UpdateAt time.Time, CreatedAt time.Time) (*Grievance, error) {
+
+	grievance_state := &Grievance{
+		Name:       					 Name,
+		Description: 					 Description,
+		ReferenceNumber: 			 ReferenceNumber,
+		Comment: 							 Comment,	
+		State: 								 State,
+		LocationOccurred:      LocationOccurred,
+		FillingModeId:         FillingModeId,	
+		GrievanceSubCategoryId: GrievanceSubCategoryId,	
+		GrievantId:            GrievantId,
+		GrievantGroupId:       GrievantGroupId,
+		UpdatedAt:             UpdateAt,
+		CreatedAt:             CreatedAt,
+	}
+	err := grievance_state.ValidateNewGrievance()
+	if err != nil {
+		return nil, err
+	}
+	return grievance_state, nil
+}
+
+
+func (dep *Grievance) ValidateUpdateGrievance() error {
+	if dep.Id < 1 {
+		return errors.New("invalid grievance State id, field is required")
+	}
+	return nil
+}
+
+
+func (dep *Grievance) ValidateNewGrievance() error {
+	if dep.Name == "" {
+		return errors.New("invalid grievance State name, field is required")
+	}
+
+	return nil
 }

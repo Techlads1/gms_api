@@ -67,11 +67,12 @@ CREATE TABLE IF NOT EXISTS grievance_sub_categories
 CREATE TABLE IF NOT EXISTS grievances
              (
                           id               SERIAL,
-                          location_occured VARCHAR (255) NULL,
+                          location_occurred VARCHAR (255) NULL,
+                          name VARCHAR (255) NOT NULL,
                           description TEXT NULL,
-                          comments TEXT NULL,
+                          comment TEXT NULL,
                           state                     VARCHAR (200) NULL,
-                          grievance_filing_mode_id  INT REFERENCES grievance_filing_modes (id),
+                          grievance_filling_mode_id  INT REFERENCES grievance_filling_modes (id),
                           grievance_sub_category_id INT REFERENCES grievance_sub_categories (id),
                           grievant_id               INT REFERENCES grievants (id),
                           grievant_group_id         INT REFERENCES grievants_groups (id),

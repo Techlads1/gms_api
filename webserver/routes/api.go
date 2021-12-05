@@ -104,5 +104,14 @@ func APIRouters(app *echo.Echo) {
 		grievance_appeal_reason.POST("/delete", api.DeleteGrievanceAppealReason)
 	}
 
+	grievance := aim.Group("/grievances")
+	{
+		grievance.POST("/store", api.StoreGrievance)
+		grievance.GET("/list", api.ListGrievances)
+		grievance.GET("/show/:id", api.ShowGrievance)
+		grievance.POST("/update", api.UpdateGrievance)
+		grievance.POST("/delete", api.DeleteGrievance)
+	}
+
 
 }
