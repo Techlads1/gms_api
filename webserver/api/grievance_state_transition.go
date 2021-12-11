@@ -59,6 +59,7 @@ func ListGrievanceStateTransitions(c echo.Context) error {
 			Description:       			GrievanceStateTransition.Description,
 			FromStateId: 						GrievanceStateTransition.FromStateId,
 			ToStateId: 							GrievanceStateTransition.ToStateId,
+			SequenceNumber: 				GrievanceStateTransition.SequenceNumber,
 			UpdatedAt:        			GrievanceStateTransition.UpdatedAt,
 			CreatedAt:             	GrievanceStateTransition.CreatedAt,
 		}
@@ -87,6 +88,7 @@ func ShowGrievanceStateTransition(c echo.Context) error {
 			Description:       			GrievanceStateTransition.Description,
 			FromStateId: 						GrievanceStateTransition.FromStateId,
 			ToStateId: 							GrievanceStateTransition.ToStateId,
+			SequenceNumber: 				GrievanceStateTransition.SequenceNumber,
 			UpdatedAt:        			GrievanceStateTransition.UpdatedAt,
 			CreatedAt:             	GrievanceStateTransition.CreatedAt,
 		}

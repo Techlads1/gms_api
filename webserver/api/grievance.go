@@ -2,6 +2,7 @@ package api
 
 import (
 	"fmt"
+	"math/rand"
 	"net/http"
 	"strconv"
 	"time"
@@ -21,24 +22,32 @@ func StoreGrievance(c echo.Context) error {
 	if err := c.Bind(&d); err != nil {
 		log.Errorf("%s\n", err)
 	}
-	pp.Printf("Grievance: %v\n", d.LocationOccurred)
+	pp.Printf("Grievance: %v\n", d)
 
-	//Validate Data
-	if err := c.Validate(&d); err != nil {
 
-		return c.JSON(http.StatusInternalServerError, "could not validate Grievance")
-	}
 
-	d.ReferenceNumber = string(rune(time.Now().Year())) + "/" + time.Now().Month().String() + "/" + "16"
-	d.GrievantId = 12
+	rand.Seed(time.Now().UnixNano())
+	d.ReferenceNumber = string(fmt.Sprintf("%v",time.Now().Unix())) + "/" + time.Now().Month().String() +
+	 "/" + fmt.Sprintf("%v", rand.Intn(999-111 +1) + 111) + "-" + fmt.Sprintf("%v", rand.Intn(999-222)+222)
+	d.GrievantId = 1
 	d.Comment = "Grievance Started."
 	d.State = "Open"
 
+		//Validate Data
+		// if err := c.Validate(&d); err != nil {
+		// 	pp.Print(err.)
+		// 	return c.JSON(http.StatusInternalServerError, "could not validate Grievance")
+		// }
+
 	service := grievance.NewService()
-	pp.Printf("Grievance: %v\n", d.State)
-	_, err := service.StoreGrievance(d.Name, d.Description, d.ReferenceNumber, d.Comment, d.State, d.LocationOccurred, 
+	pp.Printf("Grievance: %v\n", d)
+
+
+	no, err := service.StoreGrievance(d.Name, d.Description, d.ReferenceNumber, d.Comment, d.State, d.LocationOccurred, 
 		d.FillingModeId, d.GrievanceSubCategoryId, d.GrievantId,
-		 d.GrievantGroupId,)
+		 d.GrievantGroupId)
+
+pp.Print(no)
 
 	if util.CheckError(err) {
 		return c.JSON(http.StatusInternalServerError, "error creating create Grievance")

@@ -41,12 +41,14 @@ func (connect *GrievanceStateRepository) Store(arg *entity.GrievanceState) (int,
 	var Id int
 
 	query := "INSERT INTO grievance_states " +
-		"(name, description, code_name, days, updated_at, created_at) " +
-		"VALUES($1,$2,$3,$4,$5,$6) " +
+		"(name, description, code_name, days, sequence_number, updated_at, created_at) " +
+		"VALUES($1,$2,$3,$4,$5,$6,$7) " +
 		"RETURNING id"
 
+		last_sequence,_ := connect.GetLastSequence()
+
 	err := connect.db.QueryRow(context.Background(), query,
-		arg.Name, arg.Description, arg.CodeName, arg.Days,
+		arg.Name, arg.Description, arg.CodeName, arg.Days, last_sequence+1,
 		arg.UpdatedAt, arg.CreatedAt).Scan(&Id)
 	
 	return Id, err
@@ -56,14 +58,14 @@ func (connect *GrievanceStateRepository) Store(arg *entity.GrievanceState) (int,
 //Get gets single Department
 func (connect *GrievanceStateRepository) Show(id int) (*entity.GrievanceState, error) {
 
-	var query = "SELECT name, description, code_name, days, updated_at, created_at FROM grievance_states WHERE id = $1"
+	var query = "SELECT name, description, code_name, days, sequence_number, updated_at, created_at FROM grievance_states WHERE id = $1"
 
 	var data entity.GrievanceState
 
 	data.Id = id
 
 	err := connect.db.QueryRow(context.Background(), query, id).
-		Scan(&data.Name, &data.Description, &data.CodeName, &data.Days, &data.UpdatedAt, &data.CreatedAt)
+		Scan(&data.Name, &data.Description, &data.CodeName, &data.Days, &data.SequenceNumber, &data.UpdatedAt, &data.CreatedAt)
 
 	if err != nil {
 		return nil, err
@@ -91,7 +93,7 @@ func (connect *GrievanceStateRepository) List() ([]*entity.GrievanceState, error
 
 	var entities []*entity.GrievanceState
 
-	var query = "SELECT id, name, description, code_name, days, updated_at, created_at " +
+	var query = "SELECT id, name, description, code_name, days, sequence_number, updated_at, created_at " +
 		"FROM grievance_states"
 
 	rows, err := connect.db.Query(context.Background(), query)
@@ -104,7 +106,7 @@ func (connect *GrievanceStateRepository) List() ([]*entity.GrievanceState, error
 
 		var data entity.GrievanceState
 
-		if err := rows.Scan(&data.Id, &data.Name, &data.Description, &data.CodeName, &data.Days, &data.UpdatedAt, &data.CreatedAt); err != nil {
+		if err := rows.Scan(&data.Id, &data.Name, &data.Description, &data.CodeName, &data.Days, &data.SequenceNumber, &data.UpdatedAt, &data.CreatedAt); err != nil {
 			log.Errorf("error scanning %v", err)
 		}
 
@@ -123,4 +125,13 @@ func (connect *GrievanceStateRepository) Delete(id int) error {
 	_, err := connect.db.Exec(context.Background(), query, id)
 
 	return err
+}
+
+func (connect *GrievanceStateRepository) GetLastSequence() (int, error){
+
+	var last_sequence int 
+
+	err := connect.db.QueryRow(context.Background(), "SELECT MAX(sequence_number) as last_sequence_number FROM grievance_states").Scan(&last_sequence)
+
+	return last_sequence,err
 }
