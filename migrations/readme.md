@@ -8,7 +8,7 @@ go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@lat
 
 ## Migration
 Create migration sql using this command
-migrate create -ext sql [name]
+migrate create -ext sql [name] 
 
 Migrate the file by typing the following
 export POSTGRESQL_URL='postgres://postgres:postgres@localhost:5432/soso?sslmode=disable'

@@ -6,5 +6,5 @@ database:
  host: 127.0.0.1
  name: grm
  user: postgres
- password: password
+ password: emao
  port: 5432
