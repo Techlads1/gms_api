@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS grievant_groups
              );
 CREATE TABLE IF NOT EXISTS grievants_groups_has_grievants
              (
-                          grievant_group_id INT REFERENCES grievants_groups (id),
+                          grievant_group_id INT REFERENCES grievant_groups (id),
                           grievant_id       INT REFERENCES grievants (id),
                           role              VARCHAR (45) NULL,
                           PRIMARY KEY (grievant_group_id, grievant_id)
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS grievances
                           grievance_filling_mode_id  INT REFERENCES grievance_filling_modes (id),
                           grievance_sub_category_id INT REFERENCES grievance_sub_categories (id),
                           grievant_id               INT REFERENCES grievants (id),
-                          grievant_group_id         INT REFERENCES grievants_groups (id),
+                          grievant_group_id         INT REFERENCES grievant_groups (id),
                           reference_number          VARCHAR (200) NOT NULL UNIQUE,
                           created_at timestamp (0) NULL,
                           updated_at timestamp (0) NULL,
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS grievance_appeal_reasons
 CREATE TABLE IF NOT EXISTS grievance_appeals_has_appeal_reasons
              (
                           grievance_appeal_id INT REFERENCES grievance_appeals (id),
-                          appeal_reason_id    INT REFERENCES appeal_reasons (id),
+                          appeal_reason_id    INT REFERENCES grievance_appeal_reasons (id),
                           PRIMARY KEY (grievance_appeal_id, appeal_reason_id)
              );
 CREATE TABLE IF NOT EXISTS grievances_attachments

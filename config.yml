@@ -3,8 +3,8 @@ webserver:
   port: 4321
 
 database:
- host: 127.0.0.1
- name: grm
- user: postgres
- password: password
- port: 5432
+  host: 127.0.0.1
+  name: GMS
+  user: nixon
+  password: admin@2811
+  port: 5432
