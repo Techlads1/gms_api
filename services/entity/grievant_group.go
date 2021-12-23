@@ -6,22 +6,22 @@ import (
 )
 
 type GrievantGroup struct {
-	Id                    int       `json:"id,omitempty" params:"id" form:"id" validate:"omitempty,numeric"`
-	Name       						string    `json:"name" form:"name" validate:"required,max=200"`
-	Description 					string    `json:"description" form:"description" validate:"required"`
-	GrievantCategoryId 		int				`json:"grievant_category_id" form:"grievant_category_id" validate:"required"`
-	UpdatedAt             time.Time `json:"updated_at,omitempty"`
-	CreatedAt             time.Time `json:"created_at,omitempty"`
+	Id                 int       `json:"id,omitempty" params:"id" form:"id" validate:"omitempty,numeric"`
+	Name               string    `json:"name" form:"name" validate:"required,max=200"`
+	Description        string    `json:"description" form:"description" validate:"required"`
+	GrievantCategoryId int       `json:"grievant_category_id" form:"grievant_category_id" validate:"required"`
+	UpdatedAt          time.Time `json:"updated_at,omitempty"`
+	CreatedAt          time.Time `json:"created_at,omitempty"`
 }
 
-func NewGrievantGroup(Name , Description string, GrievantCategoryId int, UpdateAt time.Time, CreatedAt time.Time) (*GrievantGroup, error) {
+func NewGrievantGroup(Name, Description string, GrievantCategoryId int, UpdateAt time.Time, CreatedAt time.Time) (*GrievantGroup, error) {
 
 	grievant_Group := &GrievantGroup{
-		Name:       					 Name,
-		Description: 					 Description,
-		GrievantCategoryId:    GrievantCategoryId,
-		UpdatedAt:             UpdateAt,
-		CreatedAt:             CreatedAt,
+		Name:               Name,
+		Description:        Description,
+		GrievantCategoryId: GrievantCategoryId,
+		UpdatedAt:          UpdateAt,
+		CreatedAt:          CreatedAt,
 	}
 	err := grievant_Group.ValidateNewGrievantGroup()
 	if err != nil {
@@ -30,7 +30,6 @@ func NewGrievantGroup(Name , Description string, GrievantCategoryId int, UpdateA
 	return grievant_Group, nil
 }
 
-
 func (dep *GrievantGroup) ValidateUpdateGrievantGroup() error {
 	if dep.Id < 1 {
 		return errors.New("invalid grievant Group id, field is required")
@@ -38,13 +37,12 @@ func (dep *GrievantGroup) ValidateUpdateGrievantGroup() error {
 	return nil
 }
 
-
 func (dep *GrievantGroup) ValidateNewGrievantGroup() error {
-	if dep.Name == ""  {
+	if dep.Name == "" {
 		return errors.New("invalid grievant Group name, field is required")
 	}
 
-	if dep.GrievantCategoryId < 1  {
+	if dep.GrievantCategoryId < 1 {
 		return errors.New("invalid grievant category id, field is required")
 	}
 

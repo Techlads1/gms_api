@@ -14,7 +14,6 @@ import (
 	"github.com/tzdit/sample_api/webserver/models"
 )
 
-
 func StoreGrievantGroup(c echo.Context) error {
 
 	d := models.GrievantGroup{}
@@ -43,7 +42,6 @@ func StoreGrievantGroup(c echo.Context) error {
 
 }
 
-
 func ListGrievantGroups(c echo.Context) error {
 	service := grievant_group.NewService()
 	grievant_group, err := service.ListGrievantGroup()
@@ -55,12 +53,12 @@ func ListGrievantGroups(c echo.Context) error {
 	var json_grievant_group []*models.GrievantGroup
 	for _, GrievantGroup := range grievant_group {
 		u := &models.GrievantGroup{
-			Id:                   	GrievantGroup.Id,
-			Name:       						GrievantGroup.Name,
-			Description: 						GrievantGroup.Description,
-			GrievantCategoryId: 		GrievantGroup.GrievantCategoryId,
-			UpdatedAt:        			GrievantGroup.UpdatedAt,
-			CreatedAt:             	GrievantGroup.CreatedAt,
+			Id:                 GrievantGroup.Id,
+			Name:               GrievantGroup.Name,
+			Description:        GrievantGroup.Description,
+			GrievantCategoryId: GrievantGroup.GrievantCategoryId,
+			UpdatedAt:          GrievantGroup.UpdatedAt,
+			CreatedAt:          GrievantGroup.CreatedAt,
 		}
 
 		json_grievant_group = append(json_grievant_group, u)
@@ -68,9 +66,8 @@ func ListGrievantGroups(c echo.Context) error {
 	return c.JSON(http.StatusOK, json_grievant_group)
 }
 
-
 func ShowGrievantGroup(c echo.Context) error {
-	cID, errParseInt := strconv.ParseInt(c.Param("id"), 10, 64) 
+	cID, errParseInt := strconv.ParseInt(c.Param("id"), 10, 64)
 	if util.CheckError(errParseInt) {
 
 		return c.JSON(http.StatusInternalServerError, "invalid GrievantGroup id")
@@ -83,17 +80,16 @@ func ShowGrievantGroup(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, errMsg)
 	}
 	u := &models.GrievantGroup{
-			Id:                   	GrievantGroup.Id,
-			Name:       						GrievantGroup.Name,
-			Description: 						GrievantGroup.Description,
-			GrievantCategoryId: 		GrievantGroup.GrievantCategoryId,
-			UpdatedAt:        			GrievantGroup.UpdatedAt,
-			CreatedAt:             	GrievantGroup.CreatedAt,
-		}
-	
+		Id:                 GrievantGroup.Id,
+		Name:               GrievantGroup.Name,
+		Description:        GrievantGroup.Description,
+		GrievantCategoryId: GrievantGroup.GrievantCategoryId,
+		UpdatedAt:          GrievantGroup.UpdatedAt,
+		CreatedAt:          GrievantGroup.CreatedAt,
+	}
+
 	return c.JSON(http.StatusOK, u)
 }
-
 
 func UpdateGrievantGroup(c echo.Context) error {
 	d := models.GrievantGroup{}
@@ -109,7 +105,6 @@ func UpdateGrievantGroup(c echo.Context) error {
 	}
 
 	service := grievant_group.NewService()
-
 
 	ent, err := service.ShowGrievantGroup(d.Id)
 
@@ -132,7 +127,6 @@ func UpdateGrievantGroup(c echo.Context) error {
 		return c.JSON(http.StatusOK, "GrievantGroup updated")
 	}
 }
-
 
 func DeleteGrievantGroup(c echo.Context) error {
 	d := models.GrievantGroup{}

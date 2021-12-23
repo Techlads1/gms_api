@@ -14,7 +14,6 @@ import (
 	"github.com/tzdit/sample_api/webserver/models"
 )
 
-
 func StoreGrievantCategory(c echo.Context) error {
 
 	d := models.GrievantCategory{}
@@ -43,7 +42,6 @@ func StoreGrievantCategory(c echo.Context) error {
 
 }
 
-
 func ListGrievantCategories(c echo.Context) error {
 	service := grievant_category.NewService()
 	grievant_categories, err := service.ListGrievantCategory()
@@ -55,11 +53,11 @@ func ListGrievantCategories(c echo.Context) error {
 	var json_grievant_categories []*models.GrievantCategory
 	for _, GrievantCategory := range grievant_categories {
 		u := &models.GrievantCategory{
-			Id:                   	GrievantCategory.Id,
-			Name:       						GrievantCategory.Name,
-			Description: 						GrievantCategory.Description,
-			UpdatedAt:        			GrievantCategory.UpdatedAt,
-			CreatedAt:             	GrievantCategory.CreatedAt,
+			Id:          GrievantCategory.Id,
+			Name:        GrievantCategory.Name,
+			Description: GrievantCategory.Description,
+			UpdatedAt:   GrievantCategory.UpdatedAt,
+			CreatedAt:   GrievantCategory.CreatedAt,
 		}
 
 		json_grievant_categories = append(json_grievant_categories, u)
@@ -67,9 +65,8 @@ func ListGrievantCategories(c echo.Context) error {
 	return c.JSON(http.StatusOK, json_grievant_categories)
 }
 
-
 func ShowGrievantCategory(c echo.Context) error {
-	cID, errParseInt := strconv.ParseInt(c.Param("id"), 10, 64) 
+	cID, errParseInt := strconv.ParseInt(c.Param("id"), 10, 64)
 	if util.CheckError(errParseInt) {
 
 		return c.JSON(http.StatusInternalServerError, "invalid GrievantCategory id")
@@ -82,16 +79,15 @@ func ShowGrievantCategory(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, errMsg)
 	}
 	u := &models.GrievantCategory{
-			Id:                   	GrievantCategory.Id,
-			Name:       						GrievantCategory.Name,
-			Description: 						GrievantCategory.Description,
-			UpdatedAt:        			GrievantCategory.UpdatedAt,
-			CreatedAt:             	GrievantCategory.CreatedAt,
-		}
-	
+		Id:          GrievantCategory.Id,
+		Name:        GrievantCategory.Name,
+		Description: GrievantCategory.Description,
+		UpdatedAt:   GrievantCategory.UpdatedAt,
+		CreatedAt:   GrievantCategory.CreatedAt,
+	}
+
 	return c.JSON(http.StatusOK, u)
 }
-
 
 func UpdateGrievantCategory(c echo.Context) error {
 	d := models.GrievantCategory{}
@@ -107,7 +103,6 @@ func UpdateGrievantCategory(c echo.Context) error {
 	}
 
 	service := grievant_category.NewService()
-
 
 	ent, err := service.ShowGrievantCategory(d.Id)
 
@@ -129,7 +124,6 @@ func UpdateGrievantCategory(c echo.Context) error {
 		return c.JSON(http.StatusOK, "GrievantCategory updated")
 	}
 }
-
 
 func DeleteGrievantCategory(c echo.Context) error {
 	d := models.GrievantCategory{}

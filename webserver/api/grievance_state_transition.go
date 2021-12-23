@@ -14,7 +14,6 @@ import (
 	"github.com/tzdit/sample_api/webserver/models"
 )
 
-
 func StoreGrievanceStateTransition(c echo.Context) error {
 
 	d := models.GrievanceStateTransition{}
@@ -43,7 +42,6 @@ func StoreGrievanceStateTransition(c echo.Context) error {
 
 }
 
-
 func ListGrievanceStateTransitions(c echo.Context) error {
 	service := grievance_state_transition.NewService()
 	grievance_state_Transitions, err := service.ListGrievanceStateTransition()
@@ -55,19 +53,18 @@ func ListGrievanceStateTransitions(c echo.Context) error {
 	var json_grievance_state_Transitions []*models.GrievanceStateTransition
 	for _, GrievanceStateTransition := range grievance_state_Transitions {
 		u := &models.GrievanceStateTransition{
-			Id:                   	GrievanceStateTransition.Id,
-			Description:       			GrievanceStateTransition.Description,
-			FromStateId: 						GrievanceStateTransition.FromStateId,
-			ToStateId: 							GrievanceStateTransition.ToStateId,
-			UpdatedAt:        			GrievanceStateTransition.UpdatedAt,
-			CreatedAt:             	GrievanceStateTransition.CreatedAt,
+			Id:          GrievanceStateTransition.Id,
+			Description: GrievanceStateTransition.Description,
+			FromStateId: GrievanceStateTransition.FromStateId,
+			ToStateId:   GrievanceStateTransition.ToStateId,
+			UpdatedAt:   GrievanceStateTransition.UpdatedAt,
+			CreatedAt:   GrievanceStateTransition.CreatedAt,
 		}
 
 		json_grievance_state_Transitions = append(json_grievance_state_Transitions, u)
 	}
 	return c.JSON(http.StatusOK, json_grievance_state_Transitions)
 }
-
 
 func ShowGrievanceStateTransition(c echo.Context) error {
 	cID, errParseInt := strconv.ParseInt(c.Param("id"), 10, 64)
@@ -83,17 +80,16 @@ func ShowGrievanceStateTransition(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, errMsg)
 	}
 	u := &models.GrievanceStateTransition{
-			Id:                   	GrievanceStateTransition.Id,
-			Description:       			GrievanceStateTransition.Description,
-			FromStateId: 						GrievanceStateTransition.FromStateId,
-			ToStateId: 							GrievanceStateTransition.ToStateId,
-			UpdatedAt:        			GrievanceStateTransition.UpdatedAt,
-			CreatedAt:             	GrievanceStateTransition.CreatedAt,
-		}
-	
+		Id:          GrievanceStateTransition.Id,
+		Description: GrievanceStateTransition.Description,
+		FromStateId: GrievanceStateTransition.FromStateId,
+		ToStateId:   GrievanceStateTransition.ToStateId,
+		UpdatedAt:   GrievanceStateTransition.UpdatedAt,
+		CreatedAt:   GrievanceStateTransition.CreatedAt,
+	}
+
 	return c.JSON(http.StatusOK, u)
 }
-
 
 func UpdateGrievanceStateTransition(c echo.Context) error {
 	d := models.GrievanceStateTransition{}
@@ -109,7 +105,6 @@ func UpdateGrievanceStateTransition(c echo.Context) error {
 	}
 
 	service := grievance_state_transition.NewService()
-
 
 	ent, err := service.ShowGrievanceStateTransition(d.Id)
 

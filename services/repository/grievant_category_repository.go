@@ -13,13 +13,9 @@ import (
 	"github.com/tzdit/sample_api/services/entity"
 )
 
-
-
-
 type GrievantCategoryRepository struct {
 	db *pgxpool.Pool
 }
-
 
 func NewGrievantCategoryRepository() *GrievantCategoryRepository {
 
@@ -116,7 +112,7 @@ func (connect *GrievantCategoryRepository) List() ([]*entity.GrievantCategory, e
 
 //Delete for deleting Department
 func (connect *GrievantCategoryRepository) Delete(id int) error {
-	
+
 	query := "DELETE FROM grievant_categories WHERE id = $1"
 
 	_, err := connect.db.Exec(context.Background(), query, id)

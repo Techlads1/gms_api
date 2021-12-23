@@ -14,7 +14,6 @@ import (
 	"github.com/tzdit/sample_api/webserver/models"
 )
 
-
 func StoreGrievanceSubCategory(c echo.Context) error {
 
 	d := models.GrievanceSubCategory{}
@@ -43,7 +42,6 @@ func StoreGrievanceSubCategory(c echo.Context) error {
 
 }
 
-
 func ListGrievanceSubCategories(c echo.Context) error {
 	service := grievance_sub_category.NewService()
 	grievance_sub_categories, err := service.ListGrievanceSubCategory()
@@ -55,20 +53,19 @@ func ListGrievanceSubCategories(c echo.Context) error {
 	var json_grievance_sub_categories []*models.GrievanceSubCategory
 	for _, GrievanceSubCategory := range grievance_sub_categories {
 		u := &models.GrievanceSubCategory{
-			Id:                   	GrievanceSubCategory.Id,
-			Name:       						GrievanceSubCategory.Name,
-			Description: 						GrievanceSubCategory.Description,
-			CodeName: 							GrievanceSubCategory.CodeName,
-			GrievanceCategoryId: 		GrievanceSubCategory.GrievanceCategoryId,
-			UpdatedAt:        			GrievanceSubCategory.UpdatedAt,
-			CreatedAt:             	GrievanceSubCategory.CreatedAt,
+			Id:                  GrievanceSubCategory.Id,
+			Name:                GrievanceSubCategory.Name,
+			Description:         GrievanceSubCategory.Description,
+			CodeName:            GrievanceSubCategory.CodeName,
+			GrievanceCategoryId: GrievanceSubCategory.GrievanceCategoryId,
+			UpdatedAt:           GrievanceSubCategory.UpdatedAt,
+			CreatedAt:           GrievanceSubCategory.CreatedAt,
 		}
 
 		json_grievance_sub_categories = append(json_grievance_sub_categories, u)
 	}
 	return c.JSON(http.StatusOK, json_grievance_sub_categories)
 }
-
 
 func ShowGrievanceSubCategory(c echo.Context) error {
 	cID, errParseInt := strconv.ParseInt(c.Param("id"), 10, 64)
@@ -84,18 +81,17 @@ func ShowGrievanceSubCategory(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, errMsg)
 	}
 	u := &models.GrievanceSubCategory{
-			Id:                   	GrievanceSubCategory.Id,
-			Name:       						GrievanceSubCategory.Name,
-			Description: 						GrievanceSubCategory.Description,
-			CodeName: 							GrievanceSubCategory.CodeName,
-			GrievanceCategoryId: 		GrievanceSubCategory.GrievanceCategoryId,
-			UpdatedAt:        			GrievanceSubCategory.UpdatedAt,
-			CreatedAt:             	GrievanceSubCategory.CreatedAt,
-		}
-	
+		Id:                  GrievanceSubCategory.Id,
+		Name:                GrievanceSubCategory.Name,
+		Description:         GrievanceSubCategory.Description,
+		CodeName:            GrievanceSubCategory.CodeName,
+		GrievanceCategoryId: GrievanceSubCategory.GrievanceCategoryId,
+		UpdatedAt:           GrievanceSubCategory.UpdatedAt,
+		CreatedAt:           GrievanceSubCategory.CreatedAt,
+	}
+
 	return c.JSON(http.StatusOK, u)
 }
-
 
 func UpdateGrievanceSubCategory(c echo.Context) error {
 	d := models.GrievanceSubCategory{}
@@ -111,7 +107,6 @@ func UpdateGrievanceSubCategory(c echo.Context) error {
 	}
 
 	service := grievance_sub_category.NewService()
-
 
 	ent, err := service.ShowGrievanceSubCategory(d.Id)
 

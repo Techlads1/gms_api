@@ -14,13 +14,9 @@ import (
 	"github.com/tzdit/sample_api/services/entity"
 )
 
-
-
-
 type GrievantGroupRepository struct {
 	db *pgxpool.Pool
 }
-
 
 func NewGrievantGroupRepository() *GrievantGroupRepository {
 
@@ -46,9 +42,9 @@ func (connect *GrievantGroupRepository) Store(arg *entity.GrievantGroup) (int, e
 		"RETURNING id"
 
 	err := connect.db.QueryRow(context.Background(), query,
-		&arg.Name, &arg.Description,&arg.GrievantCategoryId,
+		&arg.Name, &arg.Description, &arg.GrievantCategoryId,
 		&arg.UpdatedAt, &arg.CreatedAt).Scan(&Id)
-		pp.Printf(err.Error())
+	pp.Printf(err.Error())
 
 	return Id, err
 
@@ -118,7 +114,7 @@ func (connect *GrievantGroupRepository) List() ([]*entity.GrievantGroup, error) 
 
 //Delete for deleting Department
 func (connect *GrievantGroupRepository) Delete(id int) error {
-	
+
 	query := "DELETE FROM grievant_groups WHERE id = $1"
 
 	_, err := connect.db.Exec(context.Background(), query, id)

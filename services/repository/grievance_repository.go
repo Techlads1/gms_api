@@ -14,13 +14,9 @@ import (
 	"github.com/tzdit/sample_api/services/entity"
 )
 
-
-
-
 type GrievanceRepository struct {
 	db *pgxpool.Pool
 }
-
 
 func NewGrievanceRepository() *GrievanceRepository {
 
@@ -36,13 +32,12 @@ func NewGrievanceRepository() *GrievanceRepository {
 
 }
 
-
 func (connect *GrievanceRepository) Store(arg *entity.Grievance) (int, error) {
 
 	var Id int
 
 	query := "INSERT INTO grievances " +
-		"(name, description, reference_number, comment,location_occurred, state,"+
+		"(name, description, reference_number, comment,location_occurred, state," +
 		" grievance_filling_mode_id,grievance_sub_category_id, grievant_id, grievant_group_id, updated_at, created_at) " +
 		"VALUES($1,$2,$3,$4,$5,$6) " +
 		"RETURNING id"
@@ -51,7 +46,7 @@ func (connect *GrievanceRepository) Store(arg *entity.Grievance) (int, error) {
 		arg.Name, arg.Description, arg.ReferenceNumber, arg.Comment, arg.LocationOccurred, arg.State,
 		arg.FillingModeId, arg.GrievanceSubCategoryId, arg.GrievantId, arg.GrievantGroupId,
 		arg.UpdatedAt, arg.CreatedAt).Scan(&Id)
-	
+
 	return Id, err
 
 }
@@ -59,8 +54,8 @@ func (connect *GrievanceRepository) Store(arg *entity.Grievance) (int, error) {
 //Get gets single Department
 func (connect *GrievanceRepository) Show(id int) (*entity.Grievance, error) {
 
-	var query = "SELECT name, description, reference_number, comment,location_occurred, state,"+
-	" grievance_filling_mode_id,grievance_sub_category_id, grievant_id, grievant_group_id, updated_at, created_at FROM grievances WHERE id = $1"
+	var query = "SELECT name, description, reference_number, comment,location_occurred, state," +
+		" grievance_filling_mode_id,grievance_sub_category_id, grievant_id, grievant_group_id, updated_at, created_at FROM grievances WHERE id = $1"
 
 	var data entity.Grievance
 
@@ -69,7 +64,7 @@ func (connect *GrievanceRepository) Show(id int) (*entity.Grievance, error) {
 	err := connect.db.QueryRow(context.Background(), query, id).
 		Scan(&data.Name, &data.Description, &data.ReferenceNumber, &data.Comment, &data.LocationOccurred,
 			&data.State, &data.FillingModeId, &data.GrievanceSubCategoryId, &data.GrievantId, &data.GrievantGroupId,
-			 &data.UpdatedAt, &data.CreatedAt)
+			&data.UpdatedAt, &data.CreatedAt)
 
 	if err != nil {
 		return nil, err
@@ -82,12 +77,12 @@ func (connect *GrievanceRepository) Show(id int) (*entity.Grievance, error) {
 //Update for updating Department
 func (connect *GrievanceRepository) Update(arg *entity.Grievance) (int, error) {
 
-	query := "UPDATE grievances SET name = $1, description = $2, reference_number, comment,location_occurred, state,"+
-	" grievance_filling_mode_id,grievance_sub_category_id, grievant_id, grievant_group_id,  updated_at = $5" +
+	query := "UPDATE grievances SET name = $1, description = $2, reference_number, comment,location_occurred, state," +
+		" grievance_filling_mode_id,grievance_sub_category_id, grievant_id, grievant_group_id,  updated_at = $5" +
 		" WHERE id = $6"
 
 	_, err := connect.db.Exec(context.Background(), query, arg.Name,
-		arg.Description,arg.ReferenceNumber, arg.Comment, arg.LocationOccurred, arg.State,
+		arg.Description, arg.ReferenceNumber, arg.Comment, arg.LocationOccurred, arg.State,
 		arg.FillingModeId, arg.GrievanceSubCategoryId, arg.GrievantId, arg.GrievantGroupId, time.Now(), arg.Id)
 
 	return arg.Id, err
@@ -99,12 +94,12 @@ func (connect *GrievanceRepository) List() ([]*entity.Grievance, error) {
 
 	var entities []*entity.Grievance
 
-	var query = "SELECT id, name, description, reference_number, comment,location_occurred, state,"+
-	" grievance_filling_mode_id,grievance_sub_category_id, grievant_id, grievant_group_id, updated_at, created_at " +
+	var query = "SELECT id, name, description, reference_number, comment,location_occurred, state," +
+		" grievance_filling_mode_id,grievance_sub_category_id, grievant_id, grievant_group_id, updated_at, created_at " +
 		"FROM grievances"
 
 	rows, err := connect.db.Query(context.Background(), query)
-pp.Print(err)
+	pp.Print(err)
 	if err != nil {
 		return nil, errors.New("error listing grievances")
 	}
@@ -113,9 +108,9 @@ pp.Print(err)
 
 		var data entity.Grievance
 
-		if err := rows.Scan(&data.Id, &data.Name, &data.Description,&data.ReferenceNumber, &data.Comment, &data.LocationOccurred,
+		if err := rows.Scan(&data.Id, &data.Name, &data.Description, &data.ReferenceNumber, &data.Comment, &data.LocationOccurred,
 			&data.State, &data.FillingModeId, &data.GrievanceSubCategoryId, &data.GrievantId, &data.GrievantGroupId,
-			 &data.UpdatedAt, &data.CreatedAt); err != nil {
+			&data.UpdatedAt, &data.CreatedAt); err != nil {
 			log.Errorf("error scanning %v", err)
 		}
 

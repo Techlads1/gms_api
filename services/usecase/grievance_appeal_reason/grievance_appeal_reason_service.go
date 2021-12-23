@@ -10,11 +10,9 @@ import (
 	"time"
 )
 
-
 type Service struct {
 	repo Repository
 }
-
 
 func NewService() *Service {
 	repo := repository.NewGrievanceAppealReasonRepository()
@@ -23,7 +21,6 @@ func NewService() *Service {
 		repo: repo,
 	}
 }
-
 
 func (s *Service) StoreGrievanceAppealReason(Name, Description string) (int, error) {
 	grievance_AppealReason, err := entity.NewGrievanceAppealReason(Name, Description, time.Now(), time.Now())
@@ -41,7 +38,6 @@ func (s *Service) StoreGrievanceAppealReason(Name, Description string) (int, err
 	return departmentID, nil
 }
 
-
 func (s *Service) ShowGrievanceAppealReason(id int) (*entity.GrievanceAppealReason, error) {
 	grievance_AppealReason, err := s.repo.Show(id)
 	if err != nil {
@@ -51,7 +47,6 @@ func (s *Service) ShowGrievanceAppealReason(id int) (*entity.GrievanceAppealReas
 	return grievance_AppealReason, nil
 }
 
-
 func (s *Service) ListGrievanceAppealReason() ([]*entity.GrievanceAppealReason, error) {
 	departments, err := s.repo.List()
 	if err != nil {
@@ -60,7 +55,6 @@ func (s *Service) ListGrievanceAppealReason() ([]*entity.GrievanceAppealReason, 
 	}
 	return departments, err
 }
-
 
 func (s *Service) DeleteGrievanceAppealReason(id int) error {
 	_, err := s.ShowGrievanceAppealReason(id)

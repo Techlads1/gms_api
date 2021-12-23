@@ -14,7 +14,6 @@ import (
 	"github.com/tzdit/sample_api/webserver/models"
 )
 
-
 func StoreGrievanceAppealReason(c echo.Context) error {
 
 	d := models.GrievanceAppealReason{}
@@ -43,7 +42,6 @@ func StoreGrievanceAppealReason(c echo.Context) error {
 
 }
 
-
 func ListGrievanceAppealReasons(c echo.Context) error {
 	service := grievance_appeal_reason.NewService()
 	grievance_appeal_reasons, err := service.ListGrievanceAppealReason()
@@ -55,18 +53,17 @@ func ListGrievanceAppealReasons(c echo.Context) error {
 	var json_grievance_appeal_reasons []*models.GrievanceAppealReason
 	for _, GrievanceAppealReason := range grievance_appeal_reasons {
 		u := &models.GrievanceAppealReason{
-			Id:                   	GrievanceAppealReason.Id,
-			Name:       						GrievanceAppealReason.Name,
-			Description: 						GrievanceAppealReason.Description,
-			UpdatedAt:        			GrievanceAppealReason.UpdatedAt,
-			CreatedAt:             	GrievanceAppealReason.CreatedAt,
+			Id:          GrievanceAppealReason.Id,
+			Name:        GrievanceAppealReason.Name,
+			Description: GrievanceAppealReason.Description,
+			UpdatedAt:   GrievanceAppealReason.UpdatedAt,
+			CreatedAt:   GrievanceAppealReason.CreatedAt,
 		}
 
 		json_grievance_appeal_reasons = append(json_grievance_appeal_reasons, u)
 	}
 	return c.JSON(http.StatusOK, json_grievance_appeal_reasons)
 }
-
 
 func ShowGrievanceAppealReason(c echo.Context) error {
 	cID, errParseInt := strconv.ParseInt(c.Param("id"), 10, 64)
@@ -82,16 +79,15 @@ func ShowGrievanceAppealReason(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, errMsg)
 	}
 	u := &models.GrievanceAppealReason{
-			Id:                   	GrievanceAppealReason.Id,
-			Name:       						GrievanceAppealReason.Name,
-			Description: 						GrievanceAppealReason.Description,
-			UpdatedAt:        			GrievanceAppealReason.UpdatedAt,
-			CreatedAt:             	GrievanceAppealReason.CreatedAt,
-		}
-	
+		Id:          GrievanceAppealReason.Id,
+		Name:        GrievanceAppealReason.Name,
+		Description: GrievanceAppealReason.Description,
+		UpdatedAt:   GrievanceAppealReason.UpdatedAt,
+		CreatedAt:   GrievanceAppealReason.CreatedAt,
+	}
+
 	return c.JSON(http.StatusOK, u)
 }
-
 
 func UpdateGrievanceAppealReason(c echo.Context) error {
 	d := models.GrievanceAppealReason{}
@@ -107,7 +103,6 @@ func UpdateGrievanceAppealReason(c echo.Context) error {
 	}
 
 	service := grievance_appeal_reason.NewService()
-
 
 	ent, err := service.ShowGrievanceAppealReason(d.Id)
 

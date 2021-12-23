@@ -7,21 +7,21 @@ import (
 
 //Department DataStructure
 type Department struct {
-	Id          int
+	Id                    int
 	DepartmentTitle       string
 	DepartmentDescription string
 	DepartmentSize        int
 	CampusId              int
 	CreatedBy             int
 	CreatedAt             time.Time
-	UpdatedBy              int
+	UpdatedBy             int
 	UpdatedAt             time.Time
 	DeletedBy             int
 	DeletedAt             time.Time
 }
 
 //NewDepartment for validating if department entity is ready for insertion
-func NewDepartment(departmentTitle , departmentDescription string,
+func NewDepartment(departmentTitle, departmentDescription string,
 	departmentSize, campusId, createdBy int, createdAt time.Time) (*Department, error) {
 
 	department := &Department{

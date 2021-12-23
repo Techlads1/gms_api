@@ -10,11 +10,9 @@ import (
 	"time"
 )
 
-
 type Service struct {
 	repo Repository
 }
-
 
 func NewService() *Service {
 	repo := repository.NewGrievanceRepository()
@@ -24,13 +22,12 @@ func NewService() *Service {
 	}
 }
 
-
-func (s *Service) StoreGrievance(Name, Description, ReferenceNumber, Comment, State, LocationOccurred string, 
+func (s *Service) StoreGrievance(Name, Description, ReferenceNumber, Comment, State, LocationOccurred string,
 	FillingModeId, GrievanceSubCategoryId, GrievantId,
-	 GrievantGroupId int,) (int, error) {
-	grievance_State, err := entity.NewGrievance(Name, Description,ReferenceNumber, Comment, State, LocationOccurred , 
+	GrievantGroupId int) (int, error) {
+	grievance_State, err := entity.NewGrievance(Name, Description, ReferenceNumber, Comment, State, LocationOccurred,
 		FillingModeId, GrievanceSubCategoryId, GrievantId,
-		 GrievantGroupId,  time.Now(), time.Now())
+		GrievantGroupId, time.Now(), time.Now())
 
 	if err != nil {
 		log.Error(err)
@@ -45,7 +42,6 @@ func (s *Service) StoreGrievance(Name, Description, ReferenceNumber, Comment, St
 	return departmentID, nil
 }
 
-
 func (s *Service) ShowGrievance(id int) (*entity.Grievance, error) {
 	grievance_State, err := s.repo.Show(id)
 	if err != nil {
@@ -55,7 +51,6 @@ func (s *Service) ShowGrievance(id int) (*entity.Grievance, error) {
 	return grievance_State, nil
 }
 
-
 func (s *Service) ListGrievance() ([]*entity.Grievance, error) {
 	departments, err := s.repo.List()
 	if err != nil {
@@ -64,7 +59,6 @@ func (s *Service) ListGrievance() ([]*entity.Grievance, error) {
 	}
 	return departments, err
 }
-
 
 func (s *Service) DeleteGrievance(id int) error {
 	_, err := s.ShowGrievance(id)

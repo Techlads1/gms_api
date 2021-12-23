@@ -10,11 +10,9 @@ import (
 	"time"
 )
 
-
 type Service struct {
 	repo Repository
 }
-
 
 func NewService() *Service {
 	repo := repository.NewGrievanceSubCategoryRepository()
@@ -23,7 +21,6 @@ func NewService() *Service {
 		repo: repo,
 	}
 }
-
 
 func (s *Service) StoreGrievanceSubCategory(Name, Description, CodeName string, GrievanceCategoryId int) (int, error) {
 	grievanceSub_category, err := entity.NewGrievanceSubCategory(Name, Description, CodeName, GrievanceCategoryId, time.Now(), time.Now())
@@ -41,7 +38,6 @@ func (s *Service) StoreGrievanceSubCategory(Name, Description, CodeName string, 
 	return departmentID, nil
 }
 
-
 func (s *Service) ShowGrievanceSubCategory(id int) (*entity.GrievanceSubCategory, error) {
 	grievanceSub_category, err := s.repo.Show(id)
 	if err != nil {
@@ -51,7 +47,6 @@ func (s *Service) ShowGrievanceSubCategory(id int) (*entity.GrievanceSubCategory
 	return grievanceSub_category, nil
 }
 
-
 func (s *Service) ListGrievanceSubCategory() ([]*entity.GrievanceSubCategory, error) {
 	departments, err := s.repo.List()
 	if err != nil {
@@ -60,7 +55,6 @@ func (s *Service) ListGrievanceSubCategory() ([]*entity.GrievanceSubCategory, er
 	}
 	return departments, err
 }
-
 
 func (s *Service) DeleteGrievanceSubCategory(id int) error {
 	_, err := s.ShowGrievanceSubCategory(id)

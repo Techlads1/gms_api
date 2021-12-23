@@ -14,7 +14,6 @@ import (
 	"github.com/tzdit/sample_api/webserver/models"
 )
 
-
 func StoreGrievanceState(c echo.Context) error {
 
 	d := models.GrievanceState{}
@@ -31,7 +30,7 @@ func StoreGrievanceState(c echo.Context) error {
 
 	service := grievance_state.NewService()
 
-	_, err := service.StoreGrievanceState(d.Name, d.Description, d.CodeName ,d.Days)
+	_, err := service.StoreGrievanceState(d.Name, d.Description, d.CodeName, d.Days)
 
 	if util.CheckError(err) {
 		return c.JSON(http.StatusInternalServerError, "error creating create GrievanceState")
@@ -42,7 +41,6 @@ func StoreGrievanceState(c echo.Context) error {
 	}
 
 }
-
 
 func ListGrievanceStates(c echo.Context) error {
 	service := grievance_state.NewService()
@@ -55,20 +53,19 @@ func ListGrievanceStates(c echo.Context) error {
 	var json_grievance_states []*models.GrievanceState
 	for _, GrievanceState := range grievance_states {
 		u := &models.GrievanceState{
-			Id:                   	GrievanceState.Id,
-			Name:       						GrievanceState.Name,
-			Description: 						GrievanceState.Description,
-			CodeName: 							GrievanceState.CodeName,
-			Days: 							    GrievanceState.Days,
-			UpdatedAt:        			GrievanceState.UpdatedAt,
-			CreatedAt:             	GrievanceState.CreatedAt,
+			Id:          GrievanceState.Id,
+			Name:        GrievanceState.Name,
+			Description: GrievanceState.Description,
+			CodeName:    GrievanceState.CodeName,
+			Days:        GrievanceState.Days,
+			UpdatedAt:   GrievanceState.UpdatedAt,
+			CreatedAt:   GrievanceState.CreatedAt,
 		}
 
 		json_grievance_states = append(json_grievance_states, u)
 	}
 	return c.JSON(http.StatusOK, json_grievance_states)
 }
-
 
 func ShowGrievanceState(c echo.Context) error {
 	cID, errParseInt := strconv.ParseInt(c.Param("id"), 10, 64)
@@ -84,18 +81,17 @@ func ShowGrievanceState(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, errMsg)
 	}
 	u := &models.GrievanceState{
-			Id:                   	GrievanceState.Id,
-			Name:       						GrievanceState.Name,
-			Description: 						GrievanceState.Description,
-			CodeName: 							GrievanceState.CodeName,
-			Days: 							    GrievanceState.Days,
-			UpdatedAt:        			GrievanceState.UpdatedAt,
-			CreatedAt:             	GrievanceState.CreatedAt,
-		}
-	
+		Id:          GrievanceState.Id,
+		Name:        GrievanceState.Name,
+		Description: GrievanceState.Description,
+		CodeName:    GrievanceState.CodeName,
+		Days:        GrievanceState.Days,
+		UpdatedAt:   GrievanceState.UpdatedAt,
+		CreatedAt:   GrievanceState.CreatedAt,
+	}
+
 	return c.JSON(http.StatusOK, u)
 }
-
 
 func UpdateGrievanceState(c echo.Context) error {
 	d := models.GrievanceState{}
@@ -111,7 +107,6 @@ func UpdateGrievanceState(c echo.Context) error {
 	}
 
 	service := grievance_state.NewService()
-
 
 	ent, err := service.ShowGrievanceState(d.Id)
 

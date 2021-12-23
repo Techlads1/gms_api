@@ -14,7 +14,6 @@ import (
 	"github.com/tzdit/sample_api/webserver/models"
 )
 
-
 func StoreGrievanceFillingMode(c echo.Context) error {
 
 	d := models.GrievanceFillingMode{}
@@ -43,7 +42,6 @@ func StoreGrievanceFillingMode(c echo.Context) error {
 
 }
 
-
 func ListGrievanceFillingModes(c echo.Context) error {
 	service := grievance_filling_mode.NewService()
 	grievance_filling_modes, err := service.ListGrievanceFillingMode()
@@ -55,19 +53,18 @@ func ListGrievanceFillingModes(c echo.Context) error {
 	var json_grievance_filling_modes []*models.GrievanceFillingMode
 	for _, GrievanceFillingMode := range grievance_filling_modes {
 		u := &models.GrievanceFillingMode{
-			Id:                   	GrievanceFillingMode.Id,
-			Name:       						GrievanceFillingMode.Name,
-			Description: 						GrievanceFillingMode.Description,
-			CodeName: 							GrievanceFillingMode.CodeName,
-			UpdatedAt:        			GrievanceFillingMode.UpdatedAt,
-			CreatedAt:             	GrievanceFillingMode.CreatedAt,
+			Id:          GrievanceFillingMode.Id,
+			Name:        GrievanceFillingMode.Name,
+			Description: GrievanceFillingMode.Description,
+			CodeName:    GrievanceFillingMode.CodeName,
+			UpdatedAt:   GrievanceFillingMode.UpdatedAt,
+			CreatedAt:   GrievanceFillingMode.CreatedAt,
 		}
 
 		json_grievance_filling_modes = append(json_grievance_filling_modes, u)
 	}
 	return c.JSON(http.StatusOK, json_grievance_filling_modes)
 }
-
 
 func ShowGrievanceFillingMode(c echo.Context) error {
 	cID, errParseInt := strconv.ParseInt(c.Param("id"), 10, 64)
@@ -83,17 +80,16 @@ func ShowGrievanceFillingMode(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, errMsg)
 	}
 	u := &models.GrievanceFillingMode{
-			Id:                   	GrievanceFillingMode.Id,
-			Name:       						GrievanceFillingMode.Name,
-			Description: 						GrievanceFillingMode.Description,
-			CodeName: 							GrievanceFillingMode.CodeName,
-			UpdatedAt:        			GrievanceFillingMode.UpdatedAt,
-			CreatedAt:             	GrievanceFillingMode.CreatedAt,
-		}
-	
+		Id:          GrievanceFillingMode.Id,
+		Name:        GrievanceFillingMode.Name,
+		Description: GrievanceFillingMode.Description,
+		CodeName:    GrievanceFillingMode.CodeName,
+		UpdatedAt:   GrievanceFillingMode.UpdatedAt,
+		CreatedAt:   GrievanceFillingMode.CreatedAt,
+	}
+
 	return c.JSON(http.StatusOK, u)
 }
-
 
 func UpdateGrievanceFillingMode(c echo.Context) error {
 	d := models.GrievanceFillingMode{}
@@ -109,7 +105,6 @@ func UpdateGrievanceFillingMode(c echo.Context) error {
 	}
 
 	service := grievance_filling_mode.NewService()
-
 
 	ent, err := service.ShowGrievanceFillingMode(d.Id)
 

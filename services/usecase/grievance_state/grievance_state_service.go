@@ -10,11 +10,9 @@ import (
 	"time"
 )
 
-
 type Service struct {
 	repo Repository
 }
-
 
 func NewService() *Service {
 	repo := repository.NewGrievanceStateRepository()
@@ -23,7 +21,6 @@ func NewService() *Service {
 		repo: repo,
 	}
 }
-
 
 func (s *Service) StoreGrievanceState(Name, Description, CodeName string, Days int) (int, error) {
 	grievance_State, err := entity.NewGrievanceState(Name, Description, CodeName, Days, time.Now(), time.Now())
@@ -41,7 +38,6 @@ func (s *Service) StoreGrievanceState(Name, Description, CodeName string, Days i
 	return departmentID, nil
 }
 
-
 func (s *Service) ShowGrievanceState(id int) (*entity.GrievanceState, error) {
 	grievance_State, err := s.repo.Show(id)
 	if err != nil {
@@ -51,7 +47,6 @@ func (s *Service) ShowGrievanceState(id int) (*entity.GrievanceState, error) {
 	return grievance_State, nil
 }
 
-
 func (s *Service) ListGrievanceState() ([]*entity.GrievanceState, error) {
 	departments, err := s.repo.List()
 	if err != nil {
@@ -60,7 +55,6 @@ func (s *Service) ListGrievanceState() ([]*entity.GrievanceState, error) {
 	}
 	return departments, err
 }
-
 
 func (s *Service) DeleteGrievanceState(id int) error {
 	_, err := s.ShowGrievanceState(id)

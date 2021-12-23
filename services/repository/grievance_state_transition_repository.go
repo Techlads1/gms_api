@@ -13,13 +13,9 @@ import (
 	"github.com/tzdit/sample_api/services/entity"
 )
 
-
-
-
 type GrievanceStateTransitionRepository struct {
 	db *pgxpool.Pool
 }
-
 
 func NewGrievanceStateTransitionRepository() *GrievanceStateTransitionRepository {
 
@@ -34,7 +30,6 @@ func NewGrievanceStateTransitionRepository() *GrievanceStateTransitionRepository
 	}
 
 }
-
 
 func (connect *GrievanceStateTransitionRepository) Store(arg *entity.GrievanceStateTransition) (int, error) {
 
