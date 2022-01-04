@@ -4,7 +4,7 @@ webserver:
 
 database:
  host: 127.0.0.1
- name: sample_api
- user: dbuser
- password: dbpass
+ name: grm
+ user: postgres
+ password: emao
  port: 5432
