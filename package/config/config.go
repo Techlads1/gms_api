@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"net/smtp"
 	"os"
 
 	"github.com/tzdit/sample_api/package/log"
@@ -14,6 +15,7 @@ import (
 type Config struct {
 	WebServer WebServerConfig
 	Database  DatabaseConfig
+	Mail MailConfig
 }
 
 // ServerConf defines server configurations
@@ -30,6 +32,18 @@ type DatabaseConfig struct {
 	Password string
 	Port     int16
 }
+
+type MailConfig struct {
+	Mailer			string
+  Host 				string
+  Port				int16
+  Username		string
+  Password		string
+  Encryption	string
+  FromAddress	string
+  FromName		string
+}
+
 
 var connectionString string
 
@@ -67,6 +81,20 @@ func (c *Config) GetDatabaseConnection() string {
 	conn := fmt.Sprintf("host=%s dbname=%s user=%s password=%s port=%d", c.Database.Host, c.Database.Name, c.Database.User, c.Database.Password, c.Database.Port)
 	return conn
 }
+
+func (c *Config) GetMailSMTPAuthentication() smtp.Auth {
+
+	return smtp.PlainAuth("",c.Mail.Username ,c.Mail.Password, c.Mail.Host)
+
+}
+
+func (c *Config) GetMailSMTPAddress() string {
+
+	return c.Mail.Host +":"+ fmt.Sprintf("%v", c.Mail.Port)
+
+}
+
+
 
 func LoggerPath() string {
 	path, err := os.Getwd()

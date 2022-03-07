@@ -8,3 +8,13 @@ database:
  user: postgres
  password: password
  port: 5432
+
+mail:
+  mailer: smtp
+  host: smtp.mailtrap.io
+  port: 2525
+  username: 131444ba61b99c
+  password: caf6d5220683cc
+  encryption: tls
+  from_address: info@dit.ac.tz
+  from_name:  GMS-DIT
