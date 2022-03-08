@@ -127,6 +127,7 @@ CREATE TABLE IF NOT EXISTS grievance_states
                           updated_at timestamp (0) NULL,
                           code_name VARCHAR (45) NULL,
                           days      INT NULL,
+                          sequence_number      INT NULL,
                           PRIMARY KEY (id)
              );
 CREATE TABLE IF NOT EXISTS grievances_has_states
@@ -155,6 +156,7 @@ CREATE TABLE IF NOT EXISTS state_transitions
                           description TEXT NULL,
                           from_state_id INT NULL,
                           to_state_id   INT NULL,
+                          sequence_number      INT NULL,
                           created_at timestamp (0) NULL,
                           updated_at timestamp (0) NULL,
                           PRIMARY KEY (id)

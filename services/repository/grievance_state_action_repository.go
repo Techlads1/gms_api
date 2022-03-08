@@ -41,12 +41,14 @@ func (connect *GrievanceStateActionRepository) Store(arg *entity.GrievanceStateA
 	var Id int
 
 	query := "INSERT INTO grievance_state_actions " +
-		"(name, role_perform_action, grievance_state_id, updated_at, created_at) " +
-		"VALUES($1,$2,$3,$4,$5) " +
+		"(name, role_perform_action, grievance_state_id, sequence_number, updated_at, created_at) " +
+		"VALUES($1,$2,$3,$4,$5,$6) " +
 		"RETURNING id"
 
+		last_sequence,_ := connect.GetLastSequence()
+
 	err := connect.db.QueryRow(context.Background(), query,
-		arg.Name, arg.RolePerformAction, arg.StateId,
+		arg.Name, arg.RolePerformAction, arg.StateId, last_sequence+1,
 		arg.UpdatedAt, arg.CreatedAt).Scan(&Id)
 
 	return Id, err
@@ -56,14 +58,14 @@ func (connect *GrievanceStateActionRepository) Store(arg *entity.GrievanceStateA
 //Get gets single Department
 func (connect *GrievanceStateActionRepository) Show(id int) (*entity.GrievanceStateAction, error) {
 
-	var query = "SELECT name, role_perform_action, grievance_state_id, updated_at, created_at FROM grievance_state_actions WHERE id = $1"
+	var query = "SELECT name, role_perform_action, grievance_state_id, sequence_number, updated_at, created_at FROM grievance_state_actions WHERE id = $1"
 
 	var data entity.GrievanceStateAction
 
 	data.Id = id
 
 	err := connect.db.QueryRow(context.Background(), query, id).
-		Scan(&data.Name, &data.RolePerformAction, &data.StateId, &data.UpdatedAt, &data.CreatedAt)
+		Scan(&data.Name, &data.RolePerformAction, &data.StateId, &data.SequenceNumber, &data.UpdatedAt, &data.CreatedAt)
 
 	if err != nil {
 		return nil, err
@@ -91,7 +93,7 @@ func (connect *GrievanceStateActionRepository) List() ([]*entity.GrievanceStateA
 
 	var entities []*entity.GrievanceStateAction
 
-	var query = "SELECT id, name, role_perform_action, grievance_state_id, updated_at, created_at " +
+	var query = "SELECT id, name, role_perform_action, grievance_state_id, sequence_number, updated_at, created_at " +
 		"FROM grievance_state_actions"
 
 	rows, err := connect.db.Query(context.Background(), query)
@@ -104,7 +106,7 @@ func (connect *GrievanceStateActionRepository) List() ([]*entity.GrievanceStateA
 
 		var data entity.GrievanceStateAction
 
-		if err := rows.Scan(&data.Id, &data.Name, &data.RolePerformAction, &data.StateId, &data.UpdatedAt, &data.CreatedAt); err != nil {
+		if err := rows.Scan(&data.Id, &data.Name, &data.RolePerformAction, &data.StateId, &data.SequenceNumber, &data.UpdatedAt, &data.CreatedAt); err != nil {
 			log.Errorf("error scanning %v", err)
 		}
 
@@ -123,4 +125,13 @@ func (connect *GrievanceStateActionRepository) Delete(id int) error {
 	_, err := connect.db.Exec(context.Background(), query, id)
 
 	return err
+}
+
+func (connect *GrievanceStateActionRepository) GetLastSequence() (int, error){
+
+	var last_sequence int 
+
+	err := connect.db.QueryRow(context.Background(), "SELECT MAX(sequence_number) as last_sequence_number FROM grievance_state_actions").Scan(&last_sequence)
+
+	return last_sequence,err
 }

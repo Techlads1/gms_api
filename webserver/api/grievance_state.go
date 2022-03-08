@@ -60,6 +60,7 @@ func ListGrievanceStates(c echo.Context) error {
 			Description: 						GrievanceState.Description,
 			CodeName: 							GrievanceState.CodeName,
 			Days: 							    GrievanceState.Days,
+			SequenceNumber: 				GrievanceState.SequenceNumber,
 			UpdatedAt:        			GrievanceState.UpdatedAt,
 			CreatedAt:             	GrievanceState.CreatedAt,
 		}
@@ -89,6 +90,7 @@ func ShowGrievanceState(c echo.Context) error {
 			Description: 						GrievanceState.Description,
 			CodeName: 							GrievanceState.CodeName,
 			Days: 							    GrievanceState.Days,
+			SequenceNumber: 				GrievanceState.SequenceNumber,
 			UpdatedAt:        			GrievanceState.UpdatedAt,
 			CreatedAt:             	GrievanceState.CreatedAt,
 		}

@@ -10,6 +10,7 @@ type GrievanceStateTransition struct {
 	FromStateId      			int    		`json:"from_state_id" form:"from_state_id" validate:"required"`
 	ToStateId      				int    		`json:"to_state_id" form:"to_state_id" validate:"required"`
 	Description 					string    `json:"description" form:"description" validate:"required"`
+	SequenceNumber        int       `json:"sequence_number,omitempty" form:"sequence_number" validate:"omitempty,numeric"`
 	UpdatedAt             time.Time `json:"updated_at,omitempty"`
 	CreatedAt             time.Time `json:"created_at,omitempty"`
 }
@@ -37,6 +38,11 @@ func (dep *GrievanceStateTransition) ValidateUpdateGrievanceStateTransition() er
 	if dep.Id < 1 {
 		return errors.New("invalid grievance StateTransition id, field is required")
 	}
+
+	if dep.ToStateId == dep.FromStateId {
+		return errors.New("invalid grievance State Transition can not transite to it self")
+	}
+
 	return nil
 }
 
@@ -46,6 +52,9 @@ func (dep *GrievanceStateTransition) ValidateNewGrievanceStateTransition() error
 		return errors.New("invalid grievance StateTransition name, field is required")
 	}
 
+	if dep.ToStateId == dep.FromStateId {
+		return errors.New("invalid grievance State Transition can not transite to it self")
+	}
 	
 	return nil
 }

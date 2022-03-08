@@ -12,6 +12,7 @@ import (
 	"github.com/tzdit/sample_api/package/log"
 	"github.com/tzdit/sample_api/services/database"
 	"github.com/tzdit/sample_api/services/entity"
+	"github.com/tzdit/sample_api/util/enums"
 )
 
 
@@ -44,14 +45,18 @@ func (connect *GrievanceRepository) Store(arg *entity.Grievance) (int, error) {
 	query := "INSERT INTO grievances " +
 		"(name, description, reference_number, comment,location_occurred, state,"+
 		" grievance_filling_mode_id,grievance_sub_category_id, grievant_id, grievant_group_id, updated_at, created_at) " +
-		"VALUES($1,$2,$3,$4,$5,$6) " +
+		"VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) " +
 		"RETURNING id"
 
 	err := connect.db.QueryRow(context.Background(), query,
 		arg.Name, arg.Description, arg.ReferenceNumber, arg.Comment, arg.LocationOccurred, arg.State,
 		arg.FillingModeId, arg.GrievanceSubCategoryId, arg.GrievantId, arg.GrievantGroupId,
 		arg.UpdatedAt, arg.CreatedAt).Scan(&Id)
-	
+
+		state_first_sequence,_ := connect.GetStateFirstSequence()
+
+		id,_ :=connect.StoreGrievanceState(Id,state_first_sequence)
+		pp.Print(id)
 	return Id, err
 
 }
@@ -134,4 +139,28 @@ func (connect *GrievanceRepository) Delete(id int) error {
 	_, err := connect.db.Exec(context.Background(), query, id)
 
 	return err
+}
+
+
+func (connect *GrievanceRepository) StoreGrievanceState(grievance_id, grievance_state_id int) (int, error) {
+
+	query := "INSERT INTO grievances_has_states ( grievance_id, grievance_state_id, status, updated_at, created_at)"+
+					"VALUES($1,$2,$3,$4,$5) RETURNING id"
+	
+	var Id int 
+ var status = enums.Open
+	err := connect.db.QueryRow(context.Background(), query,
+	grievance_id, grievance_state_id, status.Name() , time.Now(), time.Now()).Scan(&Id)
+		pp.Print(err)			
+	return Id, err
+}
+
+func (connect *GrievanceRepository) GetStateFirstSequence() (int, error){
+
+	var first_sequence int 
+
+	err := connect.db.QueryRow(context.Background(), "SELECT id FROM public.grievance_states WHERE "+
+	"sequence_number = (SELECT MIN(sequence_number) FROM public.grievance_states)").Scan(&first_sequence)
+
+	return first_sequence,err
 }

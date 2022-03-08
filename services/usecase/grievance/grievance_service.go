@@ -2,7 +2,11 @@ package grievance
 
 import (
 	"errors"
+	"fmt"
+	"os"
 
+	"github.com/k0kubun/pp"
+	"github.com/tzdit/sample_api/package/config"
 	"github.com/tzdit/sample_api/package/log"
 	"github.com/tzdit/sample_api/services/entity"
 	"github.com/tzdit/sample_api/services/repository"
@@ -42,6 +46,9 @@ func (s *Service) StoreGrievance(Name, Description, ReferenceNumber, Comment, St
 		log.Errorf("error creating Grievance: %v", err)
 		return 0, errors.New("error creating Grievance")
 	}
+
+	SendEmailToGrievance([]string{"omakei96@gmail.com"},"New Grievance Receive", "Nothing at all")
+
 	return departmentID, nil
 }
 
@@ -88,4 +95,22 @@ func (s *Service) UpdateGrievance(dep *entity.Grievance) (int, error) {
 		return dep.Id, err
 	}
 	return dep.Id, err
+}
+
+
+func SendEmailToGrievance(to []string, subject, body string)  {
+	mail := config.NewMail(to, subject, body)
+	templateFile := "services/mail/templates/grievance.html"
+	templatePath, _ := os.Getwd()
+
+	tmpPath := fmt.Sprintf("%s/%s", templatePath, templateFile)
+
+	err := mail.ParseMailTemplate(tmpPath, "Nothing.")
+
+	if err == nil {
+		ok, _ := mail.SendEmail()
+		fmt.Println(ok)
+	}
+
+	pp.Print(err)
 }

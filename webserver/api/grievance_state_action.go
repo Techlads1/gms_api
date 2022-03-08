@@ -59,6 +59,7 @@ func ListGrievanceStateActions(c echo.Context) error {
 			Name:       						GrievanceStateAction.Name,
 			RolePerformAction: 			GrievanceStateAction.RolePerformAction,
 			StateId: 							  GrievanceStateAction.StateId,
+			SequenceNumber: 				GrievanceStateAction.SequenceNumber,
 			UpdatedAt:        			GrievanceStateAction.UpdatedAt,
 			CreatedAt:             	GrievanceStateAction.CreatedAt,
 		}
@@ -87,6 +88,7 @@ func ShowGrievanceStateAction(c echo.Context) error {
 			Name:       						GrievanceStateAction.Name,
 			RolePerformAction: 			GrievanceStateAction.RolePerformAction,
 			StateId: 							  GrievanceStateAction.StateId,
+			SequenceNumber: 				GrievanceStateAction.SequenceNumber,
 			UpdatedAt:        			GrievanceStateAction.UpdatedAt,
 			CreatedAt:             	GrievanceStateAction.CreatedAt,
 		}
