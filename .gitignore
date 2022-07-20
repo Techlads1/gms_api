@@ -1,0 +1,8 @@
+bin/
+.idea
+.logs/
+.storage
+config/config.yml
+config/connection.go
+config.yml
+*.yml
